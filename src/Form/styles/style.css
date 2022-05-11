@@ -1,0 +1,13 @@
+.updateForm {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    margin: 1rem;
+}
+
+.updateForm__btnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem;
+}
