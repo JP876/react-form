@@ -3,7 +3,7 @@ import addDefaultValues from './helpers/addDefaultValues';
 import createDefaultValues from './helpers/createDefaultValues';
 import UpdateForm from './UpdateForm';
 
-const Form = ({ updateData, inputs, ...rest }) => {
+export const Form = ({ updateData, inputs, ...rest }) => {
     const [fields, setFields] = useState(null);
     const [defaultValues, setDefaultValues] = useState(null);
 
@@ -34,5 +34,3 @@ const Form = ({ updateData, inputs, ...rest }) => {
         )
     );
 };
-
-export default Form;

@@ -1,8 +1,8 @@
 {
-    "name": "react-form",
+    "name": "@josipp/react-form",
     "version": "0.1.0",
     "description": "",
-    "main": "index.js",
+    "main": "./dist/main.js",
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
