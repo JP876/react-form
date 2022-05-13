@@ -1,7 +1,7 @@
 {
     "name": "@josipp/react-form",
     "version": "0.1.0",
-    "description": "",
+    "description": "React form that uses react-hook-form with material-ui components",
     "main": "./dist/main.js",
     "scripts": {
         "storybook": "start-storybook -p 6006",
@@ -9,8 +9,13 @@
         "build-lib": "rollup -c"
     },
     "keywords": [],
-    "author": "",
+    "author": "Josip Popovic",
+    "private": false,
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JP876/react-form.git"
+    },
     "devDependencies": {
         "@babel/core": "^7.17.10",
         "@babel/preset-react": "^7.16.7",
