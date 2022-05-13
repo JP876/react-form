@@ -1,8 +1,9 @@
 {
     "name": "@josipp/react-form",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "React form that uses react-hook-form with material-ui components",
-    "main": "./dist/main.js",
+    "main": "dist/main.js",
+    "module": "dist/index.es.js",
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
