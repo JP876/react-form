@@ -5,20 +5,26 @@ import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import analyze from 'rollup-plugin-analyzer';
+import { terser } from 'rollup-plugin-terser';
 
 export default {
     input: './src/index.js',
-    output: { file: pkg.main, format: 'cjs', exports: 'named' },
+    output: { file: pkg.main, format: 'iife', sourcemap: true },
     plugins: [
-        postcss({ plugins: [], minimize: true }),
-        babel({ exclude: '/node_modules/', presets: ['@babel/preset-react'] }),
         external(),
-        resolve({ extensions: ['.js'] }),
         replace({
             'process.env.NODE_ENV': JSON.stringify('development'),
             preventAssignment: true,
         }),
+        resolve(),
+        postcss({ plugins: [], minimize: true }),
+        babel({
+            exclude: 'node_modules/**',
+            presets: ['@babel/preset-react'],
+        }),
         commonjs(),
+        terser(),
+        analyze({ summaryOnly: true, hideDeps: true }),
     ],
-    external: ['react', 'react-dom'],
 };
