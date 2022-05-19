@@ -3,12 +3,12 @@ import { Button } from '@mui/material';
 const BackStepBtn = ({
     options: { getValues },
     setFinalData,
-    handlePrevStep,
+    setActiveStep,
     activeStep,
 }) => {
     const handleValues = () => {
         setFinalData(prev => ({ ...prev, ...getValues() }));
-        handlePrevStep();
+        setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
 
     return (
@@ -18,7 +18,7 @@ const BackStepBtn = ({
             color='error'
             variant='outlined'
         >
-            Natrag
+            Back
         </Button>
     );
 };

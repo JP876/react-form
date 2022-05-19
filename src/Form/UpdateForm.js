@@ -13,7 +13,6 @@ const UpdateForm = props => {
         btnMessage,
         defaultValues,
         updateDisable,
-        styleContainer,
         clearFields = false,
         children,
         updateDefaultValues,
@@ -69,12 +68,7 @@ const UpdateForm = props => {
 
     return (
         <form onSubmit={handleSubmit(onSubmitFunc)}>
-            <InputContainer
-                styleContainer={styleContainer}
-                updateInputs={inputs}
-                control={control}
-                errors={errors}
-            />
+            <InputContainer updateInputs={inputs} control={control} errors={errors} />
             {!noBtn && (
                 <>
                     <Divider />

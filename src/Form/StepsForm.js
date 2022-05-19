@@ -1,11 +1,11 @@
+import React, { useEffect, useMemo, useState } from 'react';
 import { Divider, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useEffect, useMemo, useState } from 'react';
 import addDefaultValues from './helpers/addDefaultValues';
 import UpdateForm from './UpdateForm';
 import BackStepBtn from './BackStepBtn';
 
-const StepsForm = ({ inputs, styleContainer, onSubmit, children }) => {
+const StepsForm = ({ inputs, onSubmit, children }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [fields, setFields] = useState([]);
     const [steps, setSteps] = useState([]);
@@ -18,11 +18,16 @@ const StepsForm = ({ inputs, styleContainer, onSubmit, children }) => {
     };
 
     const handleNext = data => {
-        setFinalData(prev => ({ ...prev, ...data }));
+        if (data && data?._reactName !== 'onClick') {
+            setFinalData(prev => ({ ...prev, ...data }));
+        }
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
 
-    const handlePrevStep = () => {
+    const handlePrevStep = data => {
+        if (data && data?._reactName !== 'onClick') {
+            setFinalData(prev => ({ ...prev, ...data }));
+        }
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
 
@@ -32,12 +37,15 @@ const StepsForm = ({ inputs, styleContainer, onSubmit, children }) => {
 
     useEffect(() => {
         const obj = {};
-        inputs.map(input => (obj[input.name] = ''));
+        inputs.map(input => {
+            return input.name && (obj[input.name] = '');
+        });
         setFinalData(obj);
     }, [inputs]);
 
     useEffect(() => {
-        setFields(addDefaultValues(inputs, finalData));
+        const inputsWithDefault = inputs.map(i => ({ ...i, defaultValue: i.name }));
+        setFields(addDefaultValues(inputsWithDefault, finalData));
     }, [inputs, finalData]);
 
     useEffect(() => {
@@ -79,37 +87,56 @@ const StepsForm = ({ inputs, styleContainer, onSubmit, children }) => {
                     ? input[0].step === steps[activeStep] &&
                       Object.keys(input).length !== 0 && (
                           <UpdateForm
-                              styleContainer={styleContainer}
                               inputs={input}
-                              onSubmit={handleNext}
+                              onSubmit={
+                                  activeStep === steps.length - 1
+                                      ? handleSubmit
+                                      : handleNext
+                              }
                               defaultValues={defaultValues}
                               key={input[0].name}
-                              btnMessage='Dalje'
+                              btnMessage='Next'
                           >
                               <BackStepBtn
                                   setFinalData={setFinalData}
                                   activeStep={activeStep}
-                                  handlePrevStep={handlePrevStep}
+                                  setActiveStep={setActiveStep}
                               />
                           </UpdateForm>
                       )
                     : input[0].step === steps[activeStep] &&
-                      children &&
-                      React.Children.map(
-                          childrenMemo.filter(c => c.type === input[0].Comp),
-                          child =>
-                              React.cloneElement(child, {
-                                  options: {
+                      input.map(i => {
+                          const { Comp, step } = i;
+
+                          return (
+                              <Comp
+                                  key={step}
+                                  options={{
                                       finalData,
                                       handleSubmit,
                                       handlePrevStep,
                                       handleNext,
-                                  },
-                              })
-                      )
+                                  }}
+                              />
+                          );
+                      })
             )}
         </Box>
     );
 };
 
 export default StepsForm;
+
+/* children &&
+    React.Children.map(
+        childrenMemo.filter(c => c.type === input[0].Comp),
+        child =>
+            React.cloneElement(child, {
+                options: {
+                    finalData,
+                    handleSubmit,
+                    handlePrevStep,
+                    handleNext,
+                },
+            })
+    ) */
