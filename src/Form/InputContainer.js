@@ -4,9 +4,9 @@ import FormInput from './FormInput';
 const InputContainer = ({ updateInputs, control, errors }) => {
     return (
         <div className='updateForm updateForm__container-1c'>
-            {updateInputs.map(el => (
+            {updateInputs.map((el, i) => (
                 <FormInput
-                    key={el.name}
+                    key={el?.Comp?.name ? `${el.Comp.name}-${i}` : `${el?.name}-${i}`}
                     control={control}
                     name={el.name}
                     label={el.label}
@@ -26,6 +26,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
                     helperText={el.helperText}
                     multiline={el.multiline}
                     rows={el.rows}
+                    Comp={el.Comp}
                 />
             ))}
         </div>

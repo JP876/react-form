@@ -4,7 +4,42 @@ import FinalStep from './FinalStep';
 const a = [
     {
         step: 'First step',
-        fields: [{ name: 'name', label: 'Name' }],
+        fields: [
+            {
+                name: 'name',
+                label: 'Name',
+            },
+            {
+                name: 'date',
+                label: 'Date',
+                input: 'date',
+            },
+        ],
+    },
+    {
+        step: 'Second step',
+        Comp: AddFile,
+    },
+    {
+        step: 'Third step',
+        fields: [
+            {
+                name: 'checkbox',
+                label: 'Checkbox',
+                input: 'checkbox',
+            },
+            {
+                name: 'name1',
+                label: 'Name1',
+                rules: {
+                    required: 'This field is required',
+                },
+            },
+        ],
+    },
+    {
+        step: 'Final step',
+        Comp: FinalStep,
     },
 ];
 

@@ -10,6 +10,7 @@ export const Form = ({ updateData, inputs, ...rest }) => {
     useEffect(() => {
         if (inputs && updateData) {
             const inputsWithDefault = inputs.map(i => ({ ...i, defaultValue: i.name }));
+
             setFields(addDefaultValues(inputsWithDefault, updateData));
         }
     }, [updateData, inputs]);
