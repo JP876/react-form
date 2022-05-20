@@ -1,6 +1,13 @@
 import AddFile from './AddFile';
 import FinalStep from './FinalStep';
 
+const a = [
+    {
+        step: 'First step',
+        fields: [{ name: 'name', label: 'Name' }],
+    },
+];
+
 export const stepsRules = [
     {
         step: 'First step',

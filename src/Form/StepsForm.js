@@ -44,7 +44,10 @@ const StepsForm = ({ inputs, onSubmit, children }) => {
     }, [inputs]);
 
     useEffect(() => {
-        const inputsWithDefault = inputs.map(i => ({ ...i, defaultValue: i.name }));
+        const inputsWithDefault = inputs.map(i => {
+            if (!i.name) return i;
+            return { ...i, defaultValue: i.name };
+        });
         setFields(addDefaultValues(inputsWithDefault, finalData));
     }, [inputs, finalData]);
 
@@ -62,7 +65,7 @@ const StepsForm = ({ inputs, onSubmit, children }) => {
         const obj = {};
         if (filteredInputs.length !== 0 && activeStep !== steps.length - 1) {
             filteredInputs[activeStep].map(input => {
-                return (obj[input.name] = finalData[input.name]);
+                return input?.name && (obj[input.name] = finalData[input.name]);
             });
         }
         setDefaultValues(obj);
