@@ -38,7 +38,8 @@ const UpdateForm = props => {
 
     const onSubmitFunc = data => {
         const input = inputs.find(u => u.input === 'checkbox');
-
+        // if checkbox is not clicked once, set value to false
+        // instead of ''
         if (typeof data[input?.name] === 'string') {
             data = { ...data, [input.name]: false };
         }
@@ -72,16 +73,16 @@ const UpdateForm = props => {
             {!noBtn && (
                 <>
                     <Divider />
-                    <div className='updateForm__btnContainer'>
+                    <div className="updateForm__btnContainer">
                         {React.Children.map(children, child =>
                             React.cloneElement(child, { options: { getValues, control } })
                         )}
                         {btnMessage && (
                             <Button
                                 disabled={disableBtn}
-                                type='submit'
-                                variant='contained'
-                                color='primary'
+                                type="submit"
+                                variant="contained"
+                                color="primary"
                             >
                                 {btnMessage}
                             </Button>

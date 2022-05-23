@@ -1,47 +1,19 @@
+import { Slider } from '@mui/material';
 import AddFile from './AddFile';
 import FinalStep from './FinalStep';
 
-const a = [
-    {
-        step: 'First step',
-        fields: [
-            {
-                name: 'name',
-                label: 'Name',
-            },
-            {
-                name: 'date',
-                label: 'Date',
-                input: 'date',
-            },
-        ],
-    },
-    {
-        step: 'Second step',
-        Comp: AddFile,
-    },
-    {
-        step: 'Third step',
-        fields: [
-            {
-                name: 'checkbox',
-                label: 'Checkbox',
-                input: 'checkbox',
-            },
-            {
-                name: 'name1',
-                label: 'Name1',
-                rules: {
-                    required: 'This field is required',
-                },
-            },
-        ],
-    },
-    {
-        step: 'Final step',
-        Comp: FinalStep,
-    },
-];
+const CustomFieldSlider = ({ onChange, value }) => {
+    return (
+        <Slider
+            step={10}
+            min={0}
+            max={100}
+            value={typeof value === 'string' ? 0 : value}
+            onChange={onChange}
+            valueLabelDisplay="auto"
+        />
+    );
+};
 
 export const stepsRules = [
     {
@@ -52,9 +24,8 @@ export const stepsRules = [
     },
     {
         step: 'First step',
-        name: 'date',
-        label: 'Date',
-        input: 'date',
+        name: 'slider',
+        Comp: CustomFieldSlider,
     },
     {
         step: 'Second step',
@@ -73,6 +44,12 @@ export const stepsRules = [
         rules: {
             required: 'This field is required',
         },
+    },
+    {
+        step: 'Third step',
+        name: 'date',
+        label: 'Date',
+        input: 'date',
     },
     {
         step: 'Final step',

@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Divider, Step, StepLabel, Stepper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Divider, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
 import addDefaultValues from './helpers/addDefaultValues';
 import UpdateForm from './UpdateForm';
 import BackStepBtn from './BackStepBtn';
 
-const StepsForm = ({ inputs, onSubmit, children }) => {
+const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [fields, setFields] = useState([]);
     const [steps, setSteps] = useState([]);
@@ -30,10 +30,6 @@ const StepsForm = ({ inputs, onSubmit, children }) => {
         }
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
-
-    const childrenMemo = useMemo(() => {
-        return children ? (Array.isArray(children) ? children : [children]) : [];
-    }, [children]);
 
     useEffect(() => {
         const obj = {};
@@ -98,12 +94,24 @@ const StepsForm = ({ inputs, onSubmit, children }) => {
                               }
                               defaultValues={defaultValues}
                               key={input[0].name}
-                              btnMessage='Next'
+                              btnMessage={btnMsgs[1]}
                           >
+                              {typeof exitBtnFunc === 'function' ? (
+                                  <Button
+                                      onClick={exitBtnFunc}
+                                      color="error"
+                                      variant="outlined"
+                                  >
+                                      Odustani
+                                  </Button>
+                              ) : (
+                                  <></>
+                              )}
                               <BackStepBtn
                                   setFinalData={setFinalData}
                                   activeStep={activeStep}
                                   setActiveStep={setActiveStep}
+                                  btnMsg={btnMsgs[0]}
                               />
                           </UpdateForm>
                       )
@@ -129,17 +137,3 @@ const StepsForm = ({ inputs, onSubmit, children }) => {
 };
 
 export default StepsForm;
-
-/* children &&
-    React.Children.map(
-        childrenMemo.filter(c => c.type === input[0].Comp),
-        child =>
-            React.cloneElement(child, {
-                options: {
-                    finalData,
-                    handleSubmit,
-                    handlePrevStep,
-                    handleNext,
-                },
-            })
-    ) */

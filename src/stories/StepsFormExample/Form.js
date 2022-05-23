@@ -14,10 +14,16 @@ const StepsFormExample = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                flexDirection: 'column',
             }}
         >
-            <Paper sx={{ width: '30rem' }}>
-                <StepsForm inputs={stepsRules} onSubmit={handleSubmit} />
+            <Paper sx={{ width: '30rem', marginBottom: '3rem' }}>
+                <StepsForm
+                    inputs={stepsRules}
+                    onSubmit={handleSubmit}
+                    btnMsgs={['Back', 'Next']}
+                    //exitBtnFunc={() => console.log('yoo')}
+                />
             </Paper>
         </div>
     );

@@ -5,6 +5,7 @@ const BackStepBtn = ({
     setFinalData,
     setActiveStep,
     activeStep,
+    btnMsg,
 }) => {
     const handleValues = () => {
         setFinalData(prev => ({ ...prev, ...getValues() }));
@@ -15,10 +16,10 @@ const BackStepBtn = ({
         <Button
             disabled={activeStep === 0}
             onClick={handleValues}
-            color='error'
-            variant='outlined'
+            color="error"
+            variant="outlined"
         >
-            Back
+            {btnMsg}
         </Button>
     );
 };
