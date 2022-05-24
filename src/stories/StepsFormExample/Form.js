@@ -4,7 +4,7 @@ import StepsForm from '../../Form/StepsForm';
 import { stepsRules } from './stepsRules';
 
 const StepsFormExample = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data) => {
         console.log(data);
     };
 
@@ -21,7 +21,7 @@ const StepsFormExample = () => {
                 <StepsForm
                     inputs={stepsRules}
                     onSubmit={handleSubmit}
-                    btnMsgs={['Back', 'Next']}
+                    //btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
                     //exitBtnFunc={() => console.log('yoo')}
                 />
             </Paper>

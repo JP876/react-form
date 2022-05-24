@@ -21,7 +21,7 @@ const CustomFieldSlider = ({ onChange, value }) => {
             max={100}
             value={typeof value === 'string' ? 0 : value}
             onChange={onChange}
-            valueLabelDisplay='auto'
+            valueLabelDisplay="auto"
         />
     );
 };
@@ -31,8 +31,8 @@ const CustomFieldRadioBtn = ({ onChange, value, errors }) => {
         <FormControl error={!!errors?.radio} sx={{ margin: '0 auto' }}>
             <FormLabel sx={{ margin: '0 auto' }}>Gender</FormLabel>
             <RadioGroup row value={value} onChange={onChange}>
-                <FormControlLabel value='f' control={<Radio />} label='Female' />
-                <FormControlLabel value='m' control={<Radio />} label='Male' />
+                <FormControlLabel value="f" control={<Radio />} label="Female" />
+                <FormControlLabel value="m" control={<Radio />} label="Male" />
             </RadioGroup>
             <FormHelperText>{errors?.radio?.message}</FormHelperText>
         </FormControl>
@@ -43,7 +43,7 @@ const Text = () => {
     return (
         <>
             <Divider />
-            <Typography variant='h5' align='center' my={1}>
+            <Typography variant="h5" align="center" my={1}>
                 This is text
             </Typography>
             <Divider />
@@ -62,6 +62,16 @@ const registerRules = [
     },
     {
         Comp: Text,
+    },
+    {
+        name: 'checkbox1',
+        label: 'Checkbox',
+        input: 'checkbox',
+    },
+    {
+        name: 'checkbox2',
+        label: 'Checkbox',
+        input: 'checkbox',
     },
     {
         name: 'password',
@@ -94,10 +104,10 @@ const FormWithCustomInputs = () => {
         >
             <Paper sx={{ width: '30rem' }}>
                 <Form
-                    updateData={data}
+                    //updateData={data}
                     inputs={registerRules}
                     onSubmit={handleSubmit}
-                    btnMessage='Login'
+                    btnMessage="Login"
                 />
             </Paper>
         </div>

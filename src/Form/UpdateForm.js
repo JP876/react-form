@@ -6,17 +6,18 @@ import compareObjWithSameKeys from './helpers/compareObjWithSameKeys';
 import empty from './helpers/empty';
 import './styles/style.css';
 
-const UpdateForm = props => {
+const UpdateForm = (props) => {
     const {
         inputs,
+        children,
         onSubmit,
         btnMessage,
         defaultValues,
         updateDisable,
-        clearFields = false,
-        children,
         updateDefaultValues,
         noBtn = false,
+        clearFields = false,
+        removeErrMsgs = true,
     } = props;
     const {
         handleSubmit,
@@ -36,16 +37,19 @@ const UpdateForm = props => {
 
     let watchFields = watch();
 
-    const onSubmitFunc = data => {
-        const input = inputs.find(u => u.input === 'checkbox');
+    const onSubmitFunc = (data) => {
         // if checkbox is not clicked once, set value to false
         // instead of ''
-        if (typeof data[input?.name] === 'string') {
-            data = { ...data, [input.name]: false };
-        }
+        const input = inputs
+            .filter((u) => {
+                return u.input === 'checkbox' && data[u.name] === '';
+            })
+            .reduce((obj, key) => {
+                return Object.assign(obj, { [key.name]: false });
+            }, {});
 
-        setSubmittedData(data);
-        onSubmit(data);
+        setSubmittedData({ ...data, ...input });
+        onSubmit({ ...data, ...input });
     };
 
     useEffect(() => {
@@ -58,7 +62,7 @@ const UpdateForm = props => {
     }, [watchFields, defaultValues, updateDisable]);
 
     useEffect(() => {
-        isSubmitted && setTimeout(() => clearErrors(), [5000]);
+        !removeErrMsgs && isSubmitted && setTimeout(() => clearErrors(), [5000]);
     }, [isSubmitted, clearErrors]);
 
     useEffect(() => {
@@ -74,7 +78,7 @@ const UpdateForm = props => {
                 <>
                     <Divider />
                     <div className="updateForm__btnContainer">
-                        {React.Children.map(children, child =>
+                        {React.Children.map(children, (child) =>
                             React.cloneElement(child, { options: { getValues, control } })
                         )}
                         {btnMessage && (

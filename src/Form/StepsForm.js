@@ -5,7 +5,12 @@ import addDefaultValues from './helpers/addDefaultValues';
 import UpdateForm from './UpdateForm';
 import BackStepBtn from './BackStepBtn';
 
-const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
+const StepsForm = ({
+    inputs,
+    onSubmit,
+    btnMsgs = { nextStep: 'Next', prevStep: 'Back', exit: 'Close' },
+    exitBtnFunc,
+}) => {
     const [activeStep, setActiveStep] = useState(0);
     const [fields, setFields] = useState([]);
     const [steps, setSteps] = useState([]);
@@ -17,30 +22,30 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
         onSubmit(finalData);
     };
 
-    const handleNext = data => {
+    const handleNext = (data) => {
         if (data && data?._reactName !== 'onClick') {
-            setFinalData(prev => ({ ...prev, ...data }));
+            setFinalData((prev) => ({ ...prev, ...data }));
         }
-        setActiveStep(prevActiveStep => prevActiveStep + 1);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    const handlePrevStep = data => {
+    const handlePrevStep = (data) => {
         if (data && data?._reactName !== 'onClick') {
-            setFinalData(prev => ({ ...prev, ...data }));
+            setFinalData((prev) => ({ ...prev, ...data }));
         }
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     useEffect(() => {
         const obj = {};
-        inputs.map(input => {
+        inputs.map((input) => {
             return input.name && (obj[input.name] = '');
         });
         setFinalData(obj);
     }, [inputs]);
 
     useEffect(() => {
-        const inputsWithDefault = inputs.map(i => {
+        const inputsWithDefault = inputs.map((i) => {
             if (!i.name) return i;
             return { ...i, defaultValue: i.name };
         });
@@ -49,18 +54,20 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
 
     useEffect(() => {
         const stepsSet = new Set();
-        fields.forEach(el => stepsSet.add(el.step));
+        fields.forEach((el) => stepsSet.add(el.step));
         setSteps([...stepsSet]);
     }, [fields]);
 
     useEffect(() => {
-        setFilteredInputs(steps.map(step => fields.filter(input => input.step === step)));
+        setFilteredInputs(
+            steps.map((step) => fields.filter((input) => input.step === step))
+        );
     }, [steps, fields]);
 
     useEffect(() => {
         const obj = {};
         if (filteredInputs.length !== 0 && activeStep !== steps.length - 1) {
-            filteredInputs[activeStep].map(input => {
+            filteredInputs[activeStep].map((input) => {
                 return input?.name && (obj[input.name] = finalData[input.name]);
             });
         }
@@ -74,14 +81,14 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
                 activeStep={activeStep}
                 alternativeLabel
             >
-                {steps?.map?.(label => (
+                {steps?.map?.((label) => (
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>
                     </Step>
                 ))}
             </Stepper>
             <Divider />
-            {filteredInputs.map(input =>
+            {filteredInputs.map((input) =>
                 !input[0].Comp
                     ? input[0].step === steps[activeStep] &&
                       Object.keys(input).length !== 0 && (
@@ -94,7 +101,7 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
                               }
                               defaultValues={defaultValues}
                               key={input[0].name}
-                              btnMessage={btnMsgs[1]}
+                              btnMessage={btnMsgs.nextStep}
                           >
                               {typeof exitBtnFunc === 'function' ? (
                                   <Button
@@ -102,7 +109,7 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
                                       color="error"
                                       variant="outlined"
                                   >
-                                      Odustani
+                                      {btnMsgs.exit}
                                   </Button>
                               ) : (
                                   <></>
@@ -111,12 +118,12 @@ const StepsForm = ({ inputs, onSubmit, btnMsgs, exitBtnFunc }) => {
                                   setFinalData={setFinalData}
                                   activeStep={activeStep}
                                   setActiveStep={setActiveStep}
-                                  btnMsg={btnMsgs[0]}
+                                  btnMsg={btnMsgs.prevStep}
                               />
                           </UpdateForm>
                       )
                     : input[0].step === steps[activeStep] &&
-                      input.map(i => {
+                      input.map((i) => {
                           const { Comp, step } = i;
 
                           return (

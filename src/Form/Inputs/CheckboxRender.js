@@ -8,8 +8,10 @@ const CheckboxRender = ({ onChange, value, label, helperText }) => {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            color='primary'
-                            onChange={e => onChange(e.target.checked)}
+                            color="primary"
+                            onChange={(e) => {
+                                onChange(e.target.checked);
+                            }}
                             checked={typeof value === 'boolean' && value}
                         />
                     }
