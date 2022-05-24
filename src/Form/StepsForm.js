@@ -5,7 +5,7 @@ import addDefaultValues from './helpers/addDefaultValues';
 import UpdateForm from './UpdateForm';
 import BackStepBtn from './BackStepBtn';
 
-const StepsForm = ({
+export const StepsForm = ({
     inputs,
     onSubmit,
     btnMsgs = { nextStep: 'Next', prevStep: 'Back', exit: 'Close' },
@@ -142,5 +142,3 @@ const StepsForm = ({
         </Box>
     );
 };
-
-export default StepsForm;

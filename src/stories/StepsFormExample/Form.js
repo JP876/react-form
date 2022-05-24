@@ -1,6 +1,6 @@
 import { Paper } from '@mui/material';
 import React from 'react';
-import StepsForm from '../../Form/StepsForm';
+import { StepsForm } from '../../index';
 import { stepsRules } from './stepsRules';
 
 const StepsFormExample = () => {
