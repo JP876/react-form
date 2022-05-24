@@ -95,7 +95,7 @@ export const StepsForm = ({
                     </Step>
                 ))}
             </Stepper>
-            {/* <Divider /> */}
+            <Divider />
             {filteredInputs.map((input) =>
                 !input[0].Comp
                     ? input[0].step === steps[activeStep] &&
