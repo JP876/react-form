@@ -37,19 +37,23 @@ export const StepsForm = ({
     };
 
     useEffect(() => {
-        const obj = {};
-        inputs.map((input) => {
-            return input.name && (obj[input.name] = '');
-        });
-        setFinalData(obj);
+        if (inputs) {
+            const obj = {};
+            inputs.map((input) => {
+                return input.name && (obj[input.name] = '');
+            });
+            setFinalData(obj);
+        }
     }, [inputs]);
 
     useEffect(() => {
-        const inputsWithDefault = inputs.map((i) => {
-            if (!i.name) return i;
-            return { ...i, defaultValue: i.name };
-        });
-        setFields(addDefaultValues(inputsWithDefault, finalData));
+        if (inputs) {
+            const inputsWithDefault = inputs.map((i) => {
+                if (!i.name) return i;
+                return { ...i, defaultValue: i.name };
+            });
+            setFields(addDefaultValues(inputsWithDefault, finalData));
+        }
     }, [inputs, finalData]);
 
     useEffect(() => {
@@ -74,6 +78,10 @@ export const StepsForm = ({
         setDefaultValues(obj);
     }, [activeStep, filteredInputs, finalData, steps]);
 
+    if (!inputs && !onSubmit) {
+        return null;
+    }
+
     return (
         <Box>
             <Stepper
@@ -87,7 +95,7 @@ export const StepsForm = ({
                     </Step>
                 ))}
             </Stepper>
-            <Divider />
+            {/* <Divider /> */}
             {filteredInputs.map((input) =>
                 !input[0].Comp
                     ? input[0].step === steps[activeStep] &&
