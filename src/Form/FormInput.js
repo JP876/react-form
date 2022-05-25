@@ -5,7 +5,7 @@ import SelectRender from './Inputs/SelectRender';
 import TextRender from './Inputs/TextRender';
 import CheckboxRender from './Inputs/CheckboxRender';
 
-const FormInput = props => {
+const FormInput = (props) => {
     const {
         name,
         type,
@@ -20,13 +20,21 @@ const FormInput = props => {
         multiline,
         rows,
         Comp,
+        compProps,
     } = props;
 
     return (
         <Controller
             render={({ field: { onChange, value } }) => (
                 <>
-                    {Comp && <Comp onChange={onChange} value={value} errors={errors} />}
+                    {Comp && (
+                        <Comp
+                            onChange={onChange}
+                            value={value}
+                            errors={errors}
+                            {...compProps}
+                        />
+                    )}
                     {input === 'checkbox' && (
                         <CheckboxRender
                             onChange={onChange}

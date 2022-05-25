@@ -30,6 +30,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
                         multiline={el.multiline}
                         rows={el.rows}
                         Comp={el.Comp}
+                        compProps={el.compProps}
                     />
                 ) : (
                     el?.Comp && <Comp key={`${el.Comp.name}-${i}`} />

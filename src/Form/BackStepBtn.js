@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@mui/material';
 
 const BackStepBtn = ({
@@ -8,8 +9,8 @@ const BackStepBtn = ({
     btnMsg,
 }) => {
     const handleValues = () => {
-        setFinalData(prev => ({ ...prev, ...getValues() }));
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
+        setFinalData((prev) => ({ ...prev, ...getValues() }));
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     return (

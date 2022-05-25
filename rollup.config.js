@@ -3,7 +3,7 @@ import babel from 'rollup-plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-//import replace from '@rollup/plugin-replace';
+import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import analyze from 'rollup-plugin-analyzer';
 import { terser } from 'rollup-plugin-terser';
@@ -25,10 +25,10 @@ export default {
             presets: ['@babel/preset-react'],
         }),
         external(),
-        /* replace({
+        replace({
             'process.env.NODE_ENV': JSON.stringify('development'),
             preventAssignment: true,
-        }), */
+        }),
         resolve(),
         commonjs(),
         terser(),

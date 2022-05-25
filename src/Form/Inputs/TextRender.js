@@ -1,8 +1,8 @@
+import React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { TextField, Typography } from '@mui/material';
-import React from 'react';
 
-const TextRender = props => {
+const TextRender = (props) => {
     const { onChange, type, value, name, errors, label, helperText, multiline, rows } =
         props;
 
@@ -12,7 +12,7 @@ const TextRender = props => {
             rows={rows}
             fullWidth
             onChange={onChange}
-            variant='outlined'
+            variant="outlined"
             type={type}
             value={value === 0 || value !== null ? value : ''}
             label={label}
@@ -23,9 +23,9 @@ const TextRender = props => {
                         name={name}
                         render={({ message }) => (
                             <Typography
-                                component='span'
-                                variant='caption'
-                                color='inherit'
+                                component="span"
+                                variant="caption"
+                                color="inherit"
                             >
                                 {message}
                             </Typography>

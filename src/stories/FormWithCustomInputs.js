@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Divider,
     FormControl,
@@ -9,9 +10,48 @@ import {
     RadioGroup,
     Slider,
     Typography,
+    Select,
+    InputLabel,
+    MenuItem,
 } from '@mui/material';
-import React from 'react';
 import { Form } from '../Form/Form';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
+const namesArr = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+];
+
+const MultiSelectField = ({ value, onChange, names }) => {
+    return (
+        <FormControl>
+            <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+            <Select
+                fullWidth
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                multiple
+                value={value || []}
+                onChange={onChange}
+                input={<OutlinedInput label="Name" />}
+            >
+                {names.map((name) => (
+                    <MenuItem key={name} value={name}>
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    );
+};
 
 const CustomFieldSlider = ({ onChange, value }) => {
     return (
@@ -61,22 +101,9 @@ const registerRules = [
         Comp: CustomFieldSlider,
     },
     {
-        Comp: Text,
-    },
-    {
-        name: 'checkbox1',
-        label: 'Checkbox',
-        input: 'checkbox',
-    },
-    {
-        name: 'checkbox2',
-        label: 'Checkbox',
-        input: 'checkbox',
-    },
-    {
-        name: 'password',
-        label: 'Password',
-        type: 'password',
+        name: 'multi',
+        Comp: MultiSelectField,
+        compProps: { names: namesArr },
     },
     {
         name: 'radio',
@@ -90,7 +117,7 @@ const registerRules = [
 const data = { radio: 'm', slider: 50 };
 
 const FormWithCustomInputs = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data) => {
         console.log(data);
     };
 
