@@ -72,7 +72,7 @@ export const StepsForm = ({
         const obj = {};
         if (filteredInputs.length !== 0 && activeStep !== steps.length - 1) {
             filteredInputs[activeStep].map((input) => {
-                return input?.name && (obj[input.name] = finalData[input.name]);
+                return (obj[input.name] = finalData[input.name]);
             });
         }
         setDefaultValues(obj);

@@ -17,7 +17,7 @@ const StepsFormExample = () => {
                 flexDirection: 'column',
             }}
         >
-            <Paper sx={{ width: '30rem', marginBottom: '3rem' }}>
+            <Paper sx={{ width: '36rem', marginBottom: '3rem' }}>
                 <StepsForm
                     inputs={stepsRules}
                     onSubmit={handleSubmit}

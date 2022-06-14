@@ -40,16 +40,16 @@ const UpdateForm = (props) => {
     const onSubmitFunc = (data) => {
         // if checkbox is not clicked once, set value to false
         // instead of ''
-        const input = inputs
+        /* const input = inputs
             .filter((u) => {
                 return u.input === 'checkbox' && data[u.name] === '';
             })
             .reduce((obj, key) => {
                 return Object.assign(obj, { [key.name]: false });
-            }, {});
+            }, {}); */
 
-        setSubmittedData({ ...data, ...input });
-        onSubmit({ ...data, ...input });
+        setSubmittedData({ ...data });
+        onSubmit({ ...data });
     };
 
     useEffect(() => {

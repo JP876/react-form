@@ -18,19 +18,26 @@ const CustomFieldSlider = ({ onChange, value }) => {
 export const stepsRules = [
     {
         step: 'First step',
-        name: 'name',
+        name: 'name1',
         label: 'Name',
         type: 'text',
     },
-    {
+    /* {
         step: 'First step',
-        name: 'slider',
+        name: 'slider1',
         Comp: CustomFieldSlider,
-    },
+    }, */
     {
         step: 'Second step',
-        Comp: AddFile,
+        name: 'name2',
+        label: 'Name',
+        type: 'text',
     },
+    /* {
+        step: 'Second step',
+        name: 'slider2',
+        Comp: CustomFieldSlider,
+    }, */
     {
         step: 'Third step',
         name: 'checkbox',
@@ -39,8 +46,8 @@ export const stepsRules = [
     },
     {
         step: 'Third step',
-        name: 'name1',
-        label: 'Name1',
+        name: 'name3',
+        label: 'Name3',
         rules: {
             required: 'This field is required',
         },
@@ -50,6 +57,10 @@ export const stepsRules = [
         name: 'date',
         label: 'Date',
         input: 'date',
+    },
+    {
+        step: 'Fourth step',
+        Comp: AddFile,
     },
     {
         step: 'Final step',

@@ -18,6 +18,11 @@ const registerRules = [
         input: 'checkbox',
     },
     {
+        name: 'checkbox1',
+        label: 'Checkbox1',
+        input: 'checkbox',
+    },
+    {
         name: 'gender',
         label: 'Gender',
         input: 'select',
@@ -33,7 +38,7 @@ const registerRules = [
 ];
 
 const SimpleForm = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data) => {
         console.log(data);
     };
 
@@ -46,7 +51,7 @@ const SimpleForm = () => {
             }}
         >
             <Paper sx={{ width: '30rem' }}>
-                <Form inputs={registerRules} onSubmit={handleSubmit} btnMessage='Login' />
+                <Form inputs={registerRules} onSubmit={handleSubmit} btnMessage="Login" />
             </Paper>
         </div>
     );
