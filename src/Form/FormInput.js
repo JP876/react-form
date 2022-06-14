@@ -25,48 +25,52 @@ const FormInput = (props) => {
 
     return (
         <Controller
-            render={({ field: { onChange, value } }) => (
-                <>
-                    {Comp && (
+            render={({ field: { onChange, value } }) => {
+                if (Comp) {
+                    return (
                         <Comp
                             onChange={onChange}
                             value={value}
                             errors={errors}
                             {...compProps}
                         />
-                    )}
-                    {input === 'checkbox' && (
-                        <CheckboxRender
-                            onChange={onChange}
-                            value={value}
-                            label={label ? label : name}
-                            helperText={helperText}
-                        />
-                    )}
-                    {input === 'select' && (
-                        <SelectRender
-                            onChange={onChange}
-                            value={value}
-                            name={name}
-                            label={label ? label : name}
-                            errors={errors}
-                            data={data}
-                        />
-                    )}
-                    {input === 'date' && (
-                        <Date
-                            onChange={onChange}
-                            value={value}
-                            name={name}
-                            label={label ? label : name}
-                            errors={errors}
-                            helperText={helperText}
-                        />
-                    )}
-                    {!Comp &&
-                        input !== 'date' &&
-                        input !== 'select' &&
-                        input !== 'checkbox' && (
+                    );
+                }
+
+                switch (input) {
+                    case 'checkbox':
+                        return (
+                            <CheckboxRender
+                                onChange={onChange}
+                                value={value}
+                                label={label ? label : name}
+                                helperText={helperText}
+                            />
+                        );
+                    case 'select':
+                        return (
+                            <SelectRender
+                                onChange={onChange}
+                                value={value}
+                                name={name}
+                                label={label ? label : name}
+                                errors={errors}
+                                data={data}
+                            />
+                        );
+                    case 'date':
+                        return (
+                            <Date
+                                onChange={onChange}
+                                value={value}
+                                name={name}
+                                label={label ? label : name}
+                                errors={errors}
+                                helperText={helperText}
+                            />
+                        );
+                    default:
+                        return (
                             <TextRender
                                 onChange={onChange}
                                 type={type}
@@ -78,9 +82,9 @@ const FormInput = (props) => {
                                 multiline={multiline}
                                 rows={rows}
                             />
-                        )}
-                </>
-            )}
+                        );
+                }
+            }}
             shouldUnregister={true}
             name={name}
             control={control}

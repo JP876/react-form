@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/react';
 import SimpleForm from './SimpleForm';
 import EditForm from './EditForm';
 import StepsFormExample from './StepsFormExample/Form';
-import FormWithCustomInputs from './FormWithCustomInputs';
+import FormWithCustomInputs from './FormWithCustom/FormWithCustomInputs';
 
 const stories = storiesOf('Forms', module);
 

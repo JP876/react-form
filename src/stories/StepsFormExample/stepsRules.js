@@ -22,30 +22,25 @@ export const stepsRules = [
         label: 'Name',
         type: 'text',
     },
-    /* {
+    {
         step: 'First step',
         name: 'slider1',
         Comp: CustomFieldSlider,
-    }, */
+    },
     {
         step: 'Second step',
         name: 'name2',
         label: 'Name',
         type: 'text',
     },
-    /* {
-        step: 'Second step',
-        name: 'slider2',
-        Comp: CustomFieldSlider,
-    }, */
     {
-        step: 'Third step',
+        step: 'Second step',
         name: 'checkbox',
         label: 'Checkbox',
         input: 'checkbox',
     },
     {
-        step: 'Third step',
+        step: 'Second step',
         name: 'name3',
         label: 'Name3',
         rules: {
@@ -53,13 +48,13 @@ export const stepsRules = [
         },
     },
     {
-        step: 'Third step',
+        step: 'Second step',
         name: 'date',
         label: 'Date',
         input: 'date',
     },
     {
-        step: 'Fourth step',
+        step: 'Third step',
         Comp: AddFile,
     },
     {
