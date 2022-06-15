@@ -78,7 +78,9 @@ const UpdateForm = (props) => {
                     <Divider />
                     <div className="updateForm__btnContainer">
                         {React.Children.map(children, (child) =>
-                            React.cloneElement(child, { options: { getValues, control } })
+                            React.cloneElement(child, {
+                                options: { getValues, control, submittedData },
+                            })
                         )}
                         {btnMessage && (
                             <Button

@@ -1,6 +1,6 @@
 {
     "name": "@josipp/react-form",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": "React form that uses react-hook-form with Material UI components",
     "main": "dist/main.js",
     "module": "dist/index.es.js",
@@ -59,8 +59,8 @@
         "@mui/material": "^5.7.0",
         "@mui/x-date-pickers": "^5.0.0-alpha.2",
         "date-fns": "^2.28.0",
-        "react": "^18.1.0",
-        "react-dom": "^18.1.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "react-hook-form": "^7.17.1"
     }
 }

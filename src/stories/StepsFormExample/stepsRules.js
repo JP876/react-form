@@ -54,6 +54,12 @@ export const stepsRules = [
         input: 'date',
     },
     {
+        step: 'Second',
+        name: 'date1',
+        label: 'Date',
+        input: 'date',
+    },
+    {
         step: 'Third step',
         Comp: AddFile,
     },
