@@ -37,7 +37,7 @@ const UpdateForm = (props) => {
 
     let watchFields = watch();
 
-    const onSubmitFunc = (data) => {
+    const onSubmitFunc = (data, e) => {
         // if checkbox is not clicked once, set value to false instead of ''
         const input = inputs
             .filter((u) => {
@@ -48,7 +48,7 @@ const UpdateForm = (props) => {
             }, {});
 
         setSubmittedData({ ...data, ...input });
-        onSubmit({ ...data, ...input });
+        onSubmit({ ...data, ...input }, e);
     };
 
     useEffect(() => {
@@ -88,6 +88,7 @@ const UpdateForm = (props) => {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                value="test"
                             >
                                 {btnMessage}
                             </Button>

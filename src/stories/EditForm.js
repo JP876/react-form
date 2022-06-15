@@ -1,5 +1,5 @@
-import { Paper } from '@mui/material';
 import React from 'react';
+import { Paper, Button } from '@mui/material';
 import { Form } from '../index';
 
 const registerRules = [
@@ -40,8 +40,9 @@ const data = {
 };
 
 const EditForm = () => {
-    const handleSubmit = data => {
+    const handleSubmit = (data, e) => {
         console.log(data);
+        console.log(e);
     };
 
     return (
@@ -53,12 +54,14 @@ const EditForm = () => {
             }}
         >
             <Paper sx={{ width: '30rem' }}>
-                <Form
-                    updateData={data}
-                    inputs={registerRules}
-                    onSubmit={handleSubmit}
-                    btnMessage='Login'
-                />
+                <Form updateData={data} inputs={registerRules} onSubmit={handleSubmit}>
+                    <Button type="submit" variant="contained" color="error">
+                        Back
+                    </Button>
+                    <Button type="submit" variant="contained">
+                        Login
+                    </Button>
+                </Form>
             </Paper>
         </div>
     );
