@@ -19,25 +19,19 @@ const UpdateForm = (props) => {
         clearFields = false,
         removeErrMsgs = true,
     } = props;
-    const {
-        handleSubmit,
-        control,
-        reset,
-        getValues,
-        formState: { errors, isSubmitted, isSubmitSuccessful },
-        watch,
-        clearErrors,
-    } = useForm({
-        reValidateMode: 'onChange',
-        defaultValues: useMemo(() => defaultValues, [defaultValues]),
-    });
+    const { handleSubmit, control, reset, formState, watch, clearErrors, ...rest } =
+        useForm({
+            reValidateMode: 'onChange',
+            defaultValues: useMemo(() => defaultValues, [defaultValues]),
+        });
 
     const [disableBtn, setDisableBtn] = useState(false);
     const [submittedData, setSubmittedData] = useState({});
 
     let watchFields = watch();
+    const { errors, isSubmitted, isSubmitSuccessful } = formState;
 
-    const onSubmitFunc = (data, e) => {
+    const onSubmitFunc = async (data, e) => {
         // if checkbox is not clicked once, set value to false instead of ''
         const input = inputs
             .filter((u) => {
@@ -61,7 +55,7 @@ const UpdateForm = (props) => {
     }, [watchFields, defaultValues, updateDisable]);
 
     useEffect(() => {
-        !removeErrMsgs && isSubmitted && setTimeout(() => clearErrors(), [5000]);
+        removeErrMsgs && isSubmitted && setTimeout(() => clearErrors(), [5000]);
     }, [isSubmitted, clearErrors]);
 
     useEffect(() => {
@@ -79,7 +73,14 @@ const UpdateForm = (props) => {
                     <div className="updateForm__btnContainer">
                         {React.Children.map(children, (child) =>
                             React.cloneElement(child, {
-                                options: { getValues, control, submittedData },
+                                options: {
+                                    control,
+                                    submittedData,
+                                    clearErrors,
+                                    errors,
+                                    formState,
+                                    ...rest,
+                                },
                             })
                         )}
                         {btnMessage && (

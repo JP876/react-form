@@ -36,6 +36,7 @@ export const StepsForm = ({
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    /* 
     useEffect(() => {
         if (inputs) {
             const obj = {};
@@ -44,7 +45,8 @@ export const StepsForm = ({
             });
             setFinalData(obj);
         }
-    }, [inputs]);
+    }, [inputs]); 
+    */
 
     useEffect(() => {
         if (inputs) {
@@ -70,11 +72,13 @@ export const StepsForm = ({
 
     useEffect(() => {
         const obj = {};
+
         if (filteredInputs.length !== 0 && activeStep !== steps.length - 1) {
             filteredInputs[activeStep].map((input) => {
                 return input.name && (obj[input.name] = finalData[input.name]);
             });
         }
+
         setDefaultValues(obj);
     }, [activeStep, filteredInputs, finalData, steps]);
 
