@@ -63,7 +63,7 @@ const FormWithCustomInputs = () => {
         >
             <Paper sx={{ width: '30rem' }}>
                 <Form
-                    //updateData={data}
+                    updateData={data}
                     inputs={registerRules}
                     onSubmit={handleSubmit}
                     btnMessage="Login"

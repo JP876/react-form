@@ -54,14 +54,13 @@ const EditForm = () => {
             }}
         >
             <Paper sx={{ width: '30rem' }}>
-                <Form updateData={data} inputs={registerRules} onSubmit={handleSubmit}>
-                    <Button type="submit" variant="contained" color="error">
-                        Back
-                    </Button>
-                    <Button type="submit" variant="contained">
-                        Login
-                    </Button>
-                </Form>
+                <Form
+                    updateData={data}
+                    inputs={registerRules}
+                    updateDisable
+                    onSubmit={handleSubmit}
+                    btnMessage="Login"
+                />
             </Paper>
         </div>
     );

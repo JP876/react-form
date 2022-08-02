@@ -36,7 +36,6 @@ export const StepsForm = ({
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    /* 
     useEffect(() => {
         if (inputs) {
             const obj = {};
@@ -45,8 +44,7 @@ export const StepsForm = ({
             });
             setFinalData(obj);
         }
-    }, [inputs]); 
-    */
+    }, [inputs]);
 
     useEffect(() => {
         if (inputs) {
