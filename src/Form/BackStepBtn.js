@@ -9,7 +9,7 @@ const BackStepBtn = ({
     btnMsg,
 }) => {
     const handleValues = () => {
-        setFinalData((prev) => ({ ...prev, ...submittedData }));
+        //setFinalData((prev) => ({ ...prev, ...submittedData }));
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 

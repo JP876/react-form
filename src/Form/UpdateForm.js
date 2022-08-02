@@ -31,7 +31,7 @@ const UpdateForm = (props) => {
     let watchFields = watch();
     const { errors, isSubmitted, isSubmitSuccessful } = formState;
 
-    const onSubmitFunc = async (data, e) => {
+    const onSubmitFunc = (data, e) => {
         // if checkbox is not clicked once, set value to false instead of ''
         const input = inputs
             .filter((u) => {
