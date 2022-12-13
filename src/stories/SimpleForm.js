@@ -1,5 +1,5 @@
-import { Paper } from '@mui/material';
 import React from 'react';
+import { Paper, Stack } from '@mui/material';
 import { Form } from '../index';
 
 const registerRules = [
@@ -43,17 +43,11 @@ const SimpleForm = () => {
     };
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
+        <Stack direction="row" justifyContent="center" alignItems="center">
             <Paper sx={{ width: '30rem' }}>
                 <Form inputs={registerRules} onSubmit={handleSubmit} btnMessage="Login" />
             </Paper>
-        </div>
+        </Stack>
     );
 };
 

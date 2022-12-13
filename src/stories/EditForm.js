@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Stack } from '@mui/material';
 import { Form } from '../index';
 
 const registerRules = [
@@ -46,13 +46,7 @@ const EditForm = () => {
     };
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
+        <Stack direction="row" justifyContent="center" alignItems="center">
             <Paper sx={{ width: '30rem' }}>
                 <Form
                     updateData={data}
@@ -62,7 +56,7 @@ const EditForm = () => {
                     btnMessage="Login"
                 />
             </Paper>
-        </div>
+        </Stack>
     );
 };
 

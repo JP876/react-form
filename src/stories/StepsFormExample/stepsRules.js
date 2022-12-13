@@ -21,6 +21,9 @@ export const stepsRules = [
         name: 'name1',
         label: 'Name',
         type: 'text',
+        rules: {
+            required: 'This field is required',
+        },
     },
     {
         step: 'First step',
@@ -43,9 +46,9 @@ export const stepsRules = [
         step: 'Second step',
         name: 'name3',
         label: 'Name3',
-        rules: {
+        /* rules: {
             required: 'This field is required',
-        },
+        }, */
     },
     {
         step: 'Second step',
@@ -54,14 +57,36 @@ export const stepsRules = [
         input: 'date',
     },
     {
-        step: 'Second',
+        step: 'Third step',
         name: 'date1',
+        label: 'Date',
+        input: 'date',
+        /* rules: {
+            required: 'This field is required',
+        }, */
+    },
+    {
+        step: 'Third step1',
+        name: 'date2',
         label: 'Date',
         input: 'date',
     },
     {
-        step: 'Third step',
+        step: 'Third step2',
+        name: 'date3',
+        label: 'Date',
+        input: 'date',
+        rules: {
+            required: 'This field is required',
+        },
+    },
+    {
+        step: 'Fourth step',
+        name: 'selectedFile',
         Comp: AddFile,
+        /* rules: {
+            required: 'This field is required',
+        }, */
     },
     {
         step: 'Final step',

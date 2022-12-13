@@ -21,6 +21,9 @@ const StepsFormExample = () => {
                 <StepsForm
                     inputs={stepsRules}
                     onSubmit={handleSubmit}
+                    stepOptions={{
+                        clickableStep: true,
+                    }}
                     //btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
                     //exitBtnFunc={() => console.log('yoo')}
                 />

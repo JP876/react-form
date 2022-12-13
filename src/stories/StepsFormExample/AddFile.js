@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
-import { Button, Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
+import {
+    Button,
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    Stack,
+    Typography,
+} from '@mui/material';
 
 const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
     const [selectedFile, setSelectedFile] = useState(finalData.selectedFile || []);
 
     const handleChange = ({ target }) =>
-        setSelectedFile(prevFiles => [...prevFiles, ...target.files]);
+        setSelectedFile((prevFiles) => [...prevFiles, ...target.files]);
 
-    const handleDelete = index => {
-        setSelectedFile(prevFiles => prevFiles.filter((file, i) => i !== index));
+    const handleDelete = (index) => {
+        setSelectedFile((prevFiles) => prevFiles.filter((file, i) => i !== index));
     };
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-                <Button variant='outlined' component='label'>
-                    <Typography variant='body1'>Add file</Typography>
-                    <input onChange={handleChange} type='file' hidden multiple />
+            <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                sx={{ m: 4 }}
+            >
+                <Button variant="outlined" component="label">
+                    <Typography variant="body1">Add file</Typography>
+                    <input onChange={handleChange} type="file" hidden multiple />
                 </Button>
-            </div>
+            </Stack>
             <Divider />
             {selectedFile.length !== 0 && (
                 <List>
@@ -27,7 +40,7 @@ const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
                             key={`${file?.name}-${i}`}
                             divider
                             secondaryAction={
-                                <Button color='error' onClick={() => handleDelete(i)}>
+                                <Button color="error" onClick={() => handleDelete(i)}>
                                     Delete
                                 </Button>
                             }
@@ -37,24 +50,23 @@ const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
                     ))}
                 </List>
             )}
-            <div
-                style={{
-                    margin: '1rem',
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                }}
-            >
+            <Stack direction="row" justifyContent="space-around" sx={{ m: 2 }}>
                 <Button
-                    color='error'
+                    color="error"
                     onClick={() => handlePrevStep({ selectedFile })}
-                    variant='outlined'
+                    variant="outlined"
                 >
                     Back
                 </Button>
-                <Button onClick={() => handleNext({ selectedFile })} variant='contained'>
+                <Button
+                    //disabled={selectedFile.length === 0}
+                    id="step-form-next-btn"
+                    onClick={() => handleNext({ selectedFile })}
+                    variant="contained"
+                >
                     Next
                 </Button>
-            </div>
+            </Stack>
         </>
     );
 };
