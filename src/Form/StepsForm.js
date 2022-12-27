@@ -69,6 +69,10 @@ export const StepsForm = ({
     };
 
     const handleStep = (step) => () => {
+        const disabled = handleCheckDisable(step, steps, fields, activeStep);
+
+        if (disabled) return null;
+
         const submitButton = document.getElementById('form-submit-button');
         const customStepNextButton = document.getElementById('step-form-next-btn');
 
@@ -117,7 +121,23 @@ export const StepsForm = ({
             <Stepper activeStep={activeStep} alternativeLabel sx={{ py: 2 }}>
                 {steps?.map?.((label, i) => (
                     <Step key={label}>
-                        <StepLabel {...stepLabelProps}>
+                        <StepLabel
+                            sx={{
+                                cursor: 'pointer',
+                                '&.Mui-disabled': {
+                                    cursor: handleCheckDisable(
+                                        i,
+                                        steps,
+                                        fields,
+                                        activeStep
+                                    )
+                                        ? 'default'
+                                        : 'pointer',
+                                },
+                            }}
+                            {...stepLabelProps}
+                            onClick={handleStep(i)}
+                        >
                             {clickableStep ? (
                                 <Button
                                     size="small"
@@ -129,7 +149,6 @@ export const StepsForm = ({
                                         fields,
                                         activeStep
                                     )}
-                                    onClick={handleStep(i)}
                                 >
                                     {label}
                                 </Button>
