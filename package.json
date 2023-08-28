@@ -1,6 +1,6 @@
 {
     "name": "@josipp/react-form",
-    "version": "0.1.21",
+    "version": "0.1.22",
     "description": "React form that uses react-hook-form with Material UI components",
     "type": "module",
     "main": "dist/main.js",
