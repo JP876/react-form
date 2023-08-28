@@ -1,5 +1,5 @@
 import React from 'react';
-import FormInput from './FormInput';
+import FormInput from './FormInput.jsx';
 
 const InputContainer = ({ updateInputs, control, errors }) => {
     return (

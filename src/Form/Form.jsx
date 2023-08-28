@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+
 import addDefaultValues from './helpers/addDefaultValues';
 import createDefaultValues from './helpers/createDefaultValues';
-import UpdateForm from './UpdateForm';
+import UpdateForm from './UpdateForm.jsx';
 
 export const Form = ({ updateData, inputs, ...rest }) => {
     const [fields, setFields] = useState(null);

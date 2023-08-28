@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Divider, Step, StepLabel, Stepper } from '@mui/material';
 import { Box } from '@mui/system';
+
 import addDefaultValues from './helpers/addDefaultValues';
-import UpdateForm from './UpdateForm';
-import BackStepBtn from './BackStepBtn';
+import UpdateForm from './UpdateForm.jsx';
+import BackStepBtn from './BackStepBtn.jsx';
 
 const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
     const requiredStep = inputs.filter(

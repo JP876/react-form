@@ -1,9 +1,10 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import Date from './Inputs/Date';
-import SelectRender from './Inputs/SelectRender';
-import TextRender from './Inputs/TextRender';
-import CheckboxRender from './Inputs/CheckboxRender';
+
+import Date from './Inputs/Date.jsx';
+import SelectRender from './Inputs/SelectRender.jsx';
+import TextRender from './Inputs/TextRender.jsx';
+import CheckboxRender from './Inputs/CheckboxRender.jsx';
 
 const FormInput = (props) => {
     const {

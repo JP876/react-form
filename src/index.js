@@ -1,2 +1,2 @@
-export * from './Form/Form';
-export * from './Form/StepsForm';
+export * from './Form/Form.jsx';
+export * from './Form/StepsForm.jsx';

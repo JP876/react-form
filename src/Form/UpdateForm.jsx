@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Divider } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import InputContainer from './InputContainer';
+
+import InputContainer from './InputContainer.jsx';
 import compareObjWithSameKeys from './helpers/compareObjWithSameKeys';
 import empty from './helpers/empty';
+
 import './styles/style.css';
 
 const UpdateForm = (props) => {
