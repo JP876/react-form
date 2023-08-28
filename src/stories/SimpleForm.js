@@ -6,13 +6,11 @@ const registerRules = [
     {
         name: 'email',
         label: 'E-mail',
-        rules: { required: 'This field is required' },
     },
     {
         name: 'date',
         label: 'Date',
         input: 'date',
-        rules: { required: 'This field is required' },
     },
     {
         name: 'checkbox',
@@ -36,7 +34,6 @@ const registerRules = [
             value: 'pk',
             label: 'naziv',
         },
-        rules: { required: 'This field is required' },
     },
 ];
 

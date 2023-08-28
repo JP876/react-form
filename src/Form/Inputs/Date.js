@@ -6,18 +6,17 @@ import { TextField, Typography } from '@mui/material';
 import { ErrorMessage } from '@hookform/error-message';
 //import { hr } from 'date-fns/locale';
 
-const Date = (props) => {
-    const { value, onChange, name, errors, label, helperText, inputProps } = props;
+const Date = props => {
+    const { value, onChange, name, errors, label, helperText } = props;
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-                inputFormat="dd/MM/yyyy"
+                inputFormat='dd/MM/yyyy'
                 label={label}
-                value={value || null}
-                onChange={(newValue) => onChange(newValue)}
-                {...inputProps}
-                renderInput={(params) => {
+                value={value}
+                onChange={newValue => onChange(newValue)}
+                renderInput={params => {
                     return (
                         <TextField
                             {...params}
@@ -27,15 +26,15 @@ const Date = (props) => {
                                 autoComplete: 'new-password', // disable autocomplete and autofill
                             }}
                             helperText={
-                                (Object.keys(errors).length !== 0 && errors[name] && (
+                                (Object.keys(errors).length !== 0 && (
                                     <ErrorMessage
                                         errors={errors}
                                         name={name}
                                         render={({ message }) => (
                                             <Typography
-                                                component="span"
-                                                variant="caption"
-                                                color="inherit"
+                                                component='span'
+                                                variant='caption'
+                                                color='inherit'
                                             >
                                                 {message}
                                             </Typography>
@@ -44,7 +43,7 @@ const Date = (props) => {
                                 )) ||
                                 helperText
                             }
-                            error={Boolean(errors && errors[name])}
+                            error={errors && (errors[name] ? true : false)}
                         />
                     );
                 }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, FormControlLabel, FormHelperText } from '@mui/material';
 
-const CheckboxRender = ({ onChange, value, label, helperText, inputProps }) => {
+const CheckboxRender = ({ onChange, value, label, helperText }) => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
             <div>
@@ -13,7 +13,6 @@ const CheckboxRender = ({ onChange, value, label, helperText, inputProps }) => {
                                 onChange(e.target.checked);
                             }}
                             checked={typeof value === 'boolean' && value}
-                            {...inputProps}
                         />
                     }
                     label={label}
