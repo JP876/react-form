@@ -19,11 +19,11 @@ const UpdateForm = (props) => {
         clearFields = false,
         removeErrMsgs = true,
     } = props;
-    const { handleSubmit, control, reset, formState, watch, clearErrors, ...rest } =
-        useForm({
-            reValidateMode: 'onChange',
-            defaultValues: useMemo(() => defaultValues, [defaultValues]),
-        });
+
+    const { handleSubmit, control, reset, formState, watch, clearErrors, ...rest } = useForm({
+        reValidateMode: 'onChange',
+        defaultValues: useMemo(() => defaultValues, [defaultValues]),
+    });
 
     const [disableBtn, setDisableBtn] = useState(false);
     const [submittedData, setSubmittedData] = useState({});
@@ -50,12 +50,12 @@ const UpdateForm = (props) => {
     }, [defaultValues, reset, updateDefaultValues]);
 
     useEffect(() => {
-        updateDisable &&
-            setDisableBtn(!compareObjWithSameKeys(watchFields, defaultValues));
+        updateDisable && setDisableBtn(!compareObjWithSameKeys(watchFields, defaultValues));
     }, [watchFields, defaultValues, updateDisable]);
 
     useEffect(() => {
         removeErrMsgs && isSubmitted && setTimeout(() => clearErrors(), [5000]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSubmitted, clearErrors]);
 
     useEffect(() => {
@@ -91,7 +91,6 @@ const UpdateForm = (props) => {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
-                                value="test"
                             >
                                 {btnMessage}
                             </Button>

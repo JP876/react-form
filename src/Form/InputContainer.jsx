@@ -6,7 +6,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
         <div className="updateForm updateForm__container-1c">
             {updateInputs.map((el, i) => {
                 const { Comp } = el;
-
+                //console.log(el);
                 return el.name ? (
                     <FormInput
                         key={`${el?.name}-${i}`}
@@ -17,8 +17,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
                         defaultValue={
                             el.defaultValue
                                 ? el.defaultValue
-                                : typeof el.defaultValue === 'boolean' ||
-                                  el.defaultValue === 0
+                                : typeof el.defaultValue === 'boolean' || el.defaultValue === 0
                                 ? el.defaultValue
                                 : ''
                         }
@@ -29,6 +28,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
                         helperText={el.helperText}
                         multiline={el.multiline}
                         rows={el.rows}
+                        inputProps={el.inputProps}
                         Comp={el.Comp}
                         compProps={el.compProps}
                     />

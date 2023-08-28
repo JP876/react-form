@@ -7,7 +7,7 @@ import BackStepBtn from './BackStepBtn';
 
 const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
     const requiredStep = inputs.filter(
-        (i) => i.rules && i.rules.hasOwnProperty('required') && !i.defaultValue
+        (i) => i.rules && Object.hasOwn(i.rules, 'required') && !i.defaultValue
     );
 
     if (requiredStep.length === 0) return false;
@@ -125,12 +125,7 @@ export const StepsForm = ({
                             sx={{
                                 cursor: 'pointer',
                                 '&.Mui-disabled': {
-                                    cursor: handleCheckDisable(
-                                        i,
-                                        steps,
-                                        fields,
-                                        activeStep
-                                    )
+                                    cursor: handleCheckDisable(i, steps, fields, activeStep)
                                         ? 'default'
                                         : 'pointer',
                                 },
@@ -143,12 +138,7 @@ export const StepsForm = ({
                                     size="small"
                                     variant="text"
                                     {...stepButtonProps}
-                                    disabled={handleCheckDisable(
-                                        i,
-                                        steps,
-                                        fields,
-                                        activeStep
-                                    )}
+                                    disabled={handleCheckDisable(i, steps, fields, activeStep)}
                                 >
                                     {label}
                                 </Button>
@@ -166,20 +156,12 @@ export const StepsForm = ({
                       Object.keys(input).length !== 0 && (
                           <UpdateForm
                               inputs={input}
-                              onSubmit={
-                                  activeStep === steps.length - 1
-                                      ? handleSubmit
-                                      : handleNext
-                              }
+                              onSubmit={activeStep === steps.length - 1 ? handleSubmit : handleNext}
                               key={input[0].name}
                               btnMessage={btnMsgs.nextStep}
                           >
                               {typeof exitBtnFunc === 'function' ? (
-                                  <Button
-                                      onClick={exitBtnFunc}
-                                      color="error"
-                                      variant="outlined"
-                                  >
+                                  <Button onClick={exitBtnFunc} color="error" variant="outlined">
                                       {btnMsgs.exit}
                                   </Button>
                               ) : (

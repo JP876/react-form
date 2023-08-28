@@ -19,6 +19,7 @@ const FormInput = (props) => {
         helperText,
         multiline,
         rows,
+        inputProps,
         Comp,
         compProps,
     } = props;
@@ -28,12 +29,7 @@ const FormInput = (props) => {
             render={({ field: { onChange, value } }) => {
                 if (Comp) {
                     return (
-                        <Comp
-                            onChange={onChange}
-                            value={value}
-                            errors={errors}
-                            {...compProps}
-                        />
+                        <Comp onChange={onChange} value={value} errors={errors} {...compProps} />
                     );
                 }
 
@@ -45,6 +41,7 @@ const FormInput = (props) => {
                                 value={value}
                                 label={label ? label : name}
                                 helperText={helperText}
+                                inputProps={inputProps}
                             />
                         );
                     case 'select':
@@ -56,6 +53,8 @@ const FormInput = (props) => {
                                 label={label ? label : name}
                                 errors={errors}
                                 data={data}
+                                helperText={helperText}
+                                inputProps={inputProps}
                             />
                         );
                     case 'date':
@@ -67,6 +66,7 @@ const FormInput = (props) => {
                                 label={label ? label : name}
                                 errors={errors}
                                 helperText={helperText}
+                                inputProps={inputProps}
                             />
                         );
                     default:
@@ -81,6 +81,7 @@ const FormInput = (props) => {
                                 helperText={helperText}
                                 multiline={multiline}
                                 rows={rows}
+                                inputProps={inputProps}
                             />
                         );
                 }
