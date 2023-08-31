@@ -20,6 +20,7 @@ const UpdateForm = (props) => {
         noBtn = false,
         clearFields = false,
         removeErrMsgs = true,
+        disableSubmitBtn,
     } = props;
     const { handleSubmit, control, reset, formState, watch, clearErrors, ...rest } =
         useForm({
@@ -89,11 +90,14 @@ const UpdateForm = (props) => {
                             <Button
                                 // id for step form
                                 id="form-submit-button"
-                                disabled={disableBtn}
+                                disabled={
+                                    typeof disableSubmitBtn === 'function'
+                                        ? disableSubmitBtn(watchFields)
+                                        : disableBtn
+                                }
                                 type="submit"
                                 variant="contained"
                                 color="primary"
-                                value="test"
                             >
                                 {btnMessage}
                             </Button>

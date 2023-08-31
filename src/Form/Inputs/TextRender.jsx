@@ -1,40 +1,47 @@
 import React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { TextField, Typography } from '@mui/material';
+import InputMessage from '../InputMessage';
 
 const TextRender = (props) => {
-    const { onChange, type, value, name, errors, label, helperText, multiline, rows } =
-        props;
+    const {
+        onChange,
+        type,
+        value,
+        name,
+        errors,
+        label,
+        helperText,
+        multiline,
+        rows,
+        inputProps,
+    } = props;
+
+    const handleOnChange = (e) => {
+        onChange(e.target.value);
+        typeof inputProps?.onChange === 'function' && inputProps.onChange(e);
+    };
 
     return (
         <TextField
+            id="updateForm_textfield"
             multiline={multiline}
             rows={rows}
             fullWidth
-            onChange={onChange}
             variant="outlined"
             type={type}
-            value={value === 0 || value !== null ? value : ''}
             label={label}
+            {...inputProps}
             helperText={
-                (Object.keys(errors).length !== 0 && (
-                    <ErrorMessage
-                        errors={errors}
-                        name={name}
-                        render={({ message }) => (
-                            <Typography
-                                component="span"
-                                variant="caption"
-                                color="inherit"
-                            >
-                                {message}
-                            </Typography>
-                        )}
-                    />
-                )) ||
-                helperText
+                <InputMessage
+                    errors={errors}
+                    name={name}
+                    helperText={helperText || inputProps?.helperText}
+                />
             }
-            error={errors && (errors[name] ? true : false)}
+            error={errors && Boolean(errors[name])}
+            value={value === 0 || value !== null ? value : ''}
+            onChange={handleOnChange}
         />
     );
 };

@@ -2,21 +2,34 @@ import React from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TextField, Typography } from '@mui/material';
-import { ErrorMessage } from '@hookform/error-message';
-//import { hr } from 'date-fns/locale';
+import { TextField } from '@mui/material';
 
-const Date = props => {
-    const { value, onChange, name, errors, label, helperText } = props;
+import { useFormConfigState } from '../context/FormConfigProvider';
+import InputMessage from '../InputMessage';
+
+const Date = (props) => {
+    const { value, onChange, name, errors, label, helperText, inputProps } = props;
+
+    const config = useFormConfigState();
+
+    const handleOnChange = (newValue) => {
+        onChange(newValue);
+        typeof inputProps?.onChange === 'function' && inputProps.onChange(newValue);
+    };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={config?.date?.adapterLocale}
+        >
             <DatePicker
-                inputFormat='dd/MM/yyyy'
+                id="updateForm_datepicker"
+                inputFormat="dd/MM/yyyy"
                 label={label}
+                {...inputProps}
                 value={value}
-                onChange={newValue => onChange(newValue)}
-                renderInput={params => {
+                onChange={handleOnChange}
+                renderInput={(params) => {
                     return (
                         <TextField
                             {...params}
@@ -26,24 +39,13 @@ const Date = props => {
                                 autoComplete: 'new-password', // disable autocomplete and autofill
                             }}
                             helperText={
-                                (Object.keys(errors).length !== 0 && (
-                                    <ErrorMessage
-                                        errors={errors}
-                                        name={name}
-                                        render={({ message }) => (
-                                            <Typography
-                                                component='span'
-                                                variant='caption'
-                                                color='inherit'
-                                            >
-                                                {message}
-                                            </Typography>
-                                        )}
-                                    />
-                                )) ||
-                                helperText
+                                <InputMessage
+                                    errors={errors}
+                                    name={name}
+                                    helperText={helperText || inputProps?.helperText}
+                                />
                             }
-                            error={errors && (errors[name] ? true : false)}
+                            error={errors && Boolean(errors[name])}
                         />
                     );
                 }}

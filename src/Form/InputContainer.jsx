@@ -29,6 +29,7 @@ const InputContainer = ({ updateInputs, control, errors }) => {
                         helperText={el.helperText}
                         multiline={el.multiline}
                         rows={el.rows}
+                        inputProps={el.inputProps}
                         Comp={el.Comp}
                         compProps={el.compProps}
                     />
