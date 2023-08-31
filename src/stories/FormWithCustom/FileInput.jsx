@@ -4,7 +4,7 @@ import React from 'react';
 const FileInput = ({ onChange, value }) => {
     return (
         <>
-            <Divider />
+            <Divider sx={{ mx: -2 }} />
             <Button variant="outlined" component="label">
                 <Typography variant="body1">Add file</Typography>
                 <input
