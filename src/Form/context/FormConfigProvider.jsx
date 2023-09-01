@@ -12,11 +12,7 @@ const defaultConfig = {
 const FormConfigProvider = ({ config, children }) => {
     const configValue = React.useMemo(() => config, []);
 
-    return (
-        <FormConfigState.Provider value={configValue}>
-            {children}
-        </FormConfigState.Provider>
-    );
+    return <FormConfigState.Provider value={configValue}>{children}</FormConfigState.Provider>;
 };
 
-export { FormConfigProvider as default, useFormConfigState, defaultConfig };
+export { FormConfigProvider, useFormConfigState, defaultConfig };
