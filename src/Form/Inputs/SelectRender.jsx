@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-    FormControl,
-    FormHelperText,
-    InputLabel,
-    MenuItem,
-    Select,
-    Typography,
-} from '@mui/material';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { Box } from '@mui/system';
-import { ErrorMessage } from '@hookform/error-message';
-import InputMessage from '../InputMessage';
+
+import InputMessage from '../InputMessage.jsx';
 
 const SelectRender = (props) => {
-    const { value, onChange, name, errors, data, label, size, helperText, inputProps } =
-        props;
+    const { value, onChange, name, errors, data, label, size, helperText, inputProps } = props;
 
     const handleOnChange = (e) => {
         onChange(e.target.value);
@@ -23,9 +15,7 @@ const SelectRender = (props) => {
     return (
         <Box id="updateForm_select" sx={{ minWidth: 120 }}>
             <FormControl fullWidth error={errors && Boolean(errors[name])}>
-                <InputLabel id="select-label">
-                    {label || inputProps?.label || ''}
-                </InputLabel>
+                <InputLabel id="select-label">{label || inputProps?.label || ''}</InputLabel>
                 <Select
                     labelId="select-label"
                     id="simple-select"

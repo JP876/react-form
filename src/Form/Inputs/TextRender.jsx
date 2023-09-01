@@ -1,21 +1,11 @@
 import React from 'react';
-import { ErrorMessage } from '@hookform/error-message';
-import { TextField, Typography } from '@mui/material';
-import InputMessage from '../InputMessage';
+import { TextField } from '@mui/material';
+
+import InputMessage from '../InputMessage.jsx';
 
 const TextRender = (props) => {
-    const {
-        onChange,
-        type,
-        value,
-        name,
-        errors,
-        label,
-        helperText,
-        multiline,
-        rows,
-        inputProps,
-    } = props;
+    const { onChange, type, value, name, errors, label, helperText, multiline, rows, inputProps } =
+        props;
 
     const handleOnChange = (e) => {
         onChange(e.target.value);

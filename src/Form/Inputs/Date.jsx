@@ -4,8 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 
-import { useFormConfigState } from '../context/FormConfigProvider';
-import InputMessage from '../InputMessage';
+import { useFormConfigState } from '../context/FormConfigProvider.jsx';
+import InputMessage from '../InputMessage.jsx';
 
 const Date = (props) => {
     const { value, onChange, name, errors, label, helperText, inputProps } = props;
