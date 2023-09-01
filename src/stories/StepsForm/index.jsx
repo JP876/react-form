@@ -1,5 +1,6 @@
-import { Paper } from '@mui/material';
 import React from 'react';
+import { Paper, Stack } from '@mui/material';
+
 import { StepsForm } from '../../index';
 import { stepsRules } from './stepsRules';
 
@@ -9,14 +10,7 @@ const StepsFormExample = () => {
     };
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-            }}
-        >
+        <Stack justifyContent="center" alignItems="center">
             <Paper sx={{ width: '36rem', marginBottom: '3rem' }}>
                 <StepsForm
                     inputs={stepsRules}
@@ -28,7 +22,7 @@ const StepsFormExample = () => {
                     //exitBtnFunc={() => console.log('yoo')}
                 />
             </Paper>
-        </div>
+        </Stack>
     );
 };
 

@@ -54,6 +54,12 @@ const EditForm = () => {
                     updateDisable
                     onSubmit={handleSubmit}
                     btnMessage="Login"
+                    disableSubmitBtn={(values) => {
+                        console.log(values);
+                        if (JSON.stringify(values) === JSON.stringify(data)) {
+                            return true;
+                        }
+                    }}
                 />
             </Paper>
         </Stack>
