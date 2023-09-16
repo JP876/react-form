@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import Date from './Inputs/Date.jsx';
 import SelectRender from './Inputs/SelectRender.jsx';
@@ -25,15 +25,26 @@ const FormInput = (props) => {
         compProps,
     } = props;
 
+    const methods = useFormContext();
+
     return (
         <Controller
-            render={({ field: { onChange, value } }) => {
+            render={(args) => {
+                const { field, fieldState, formState } = args;
+                const { onChange, value, onBlur, name, ref } = field;
+
                 if (Comp) {
                     return (
                         <Comp
+                            compRef={ref}
                             onChange={onChange}
+                            onBlur={onBlur}
+                            name={name}
                             value={value}
                             errors={errors}
+                            methods={methods}
+                            fieldState={fieldState}
+                            formState={formState}
                             {...compProps}
                         />
                     );
@@ -43,51 +54,48 @@ const FormInput = (props) => {
                     case 'checkbox':
                         return (
                             <CheckboxRender
-                                onChange={onChange}
-                                value={value}
+                                {...args}
                                 label={label ? label : name}
                                 helperText={helperText}
                                 inputProps={inputProps}
+                                methods={methods}
                             />
                         );
                     case 'select':
                         return (
                             <SelectRender
-                                onChange={onChange}
-                                value={value}
-                                name={name}
+                                {...args}
                                 label={label ? label : name}
                                 errors={errors}
                                 data={data}
                                 helperText={helperText}
                                 inputProps={inputProps}
+                                methods={methods}
                             />
                         );
                     case 'date':
                         return (
                             <Date
-                                onChange={onChange}
-                                value={value}
-                                name={name}
+                                {...args}
                                 label={label ? label : name}
                                 errors={errors}
                                 helperText={helperText}
                                 inputProps={inputProps}
+                                methods={methods}
                             />
                         );
                     default:
                         return (
                             <TextRender
-                                onChange={onChange}
+                                {...args}
                                 type={type}
-                                value={value}
-                                name={name}
                                 label={label ? label : name}
                                 errors={errors}
                                 helperText={helperText}
                                 multiline={multiline}
                                 rows={rows}
                                 inputProps={inputProps}
+                                methods={methods}
                             />
                         );
                 }

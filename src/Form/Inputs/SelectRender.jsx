@@ -4,28 +4,41 @@ import { Box } from '@mui/system';
 
 import InputMessage from '../InputMessage.jsx';
 
-const SelectRender = (props) => {
-    const { value, onChange, name, errors, data, label, size, helperText, inputProps } = props;
-
+const SelectRender = ({
+    field,
+    fieldState,
+    formState,
+    errors,
+    data,
+    label,
+    size,
+    helperText,
+    inputProps,
+    methods,
+}) => {
     const handleOnChange = (e) => {
-        onChange(e.target.value);
-        typeof inputProps?.onChange === 'function' && inputProps.onChange(e);
+        field?.onChange(e.target.value);
+        typeof inputProps?.onChange === 'function' &&
+            inputProps.onChange(e, methods, fieldState, formState);
     };
 
     return (
         <Box id="updateForm_select" sx={{ minWidth: 120 }}>
-            <FormControl fullWidth error={errors && Boolean(errors[name])}>
+            <FormControl fullWidth error={errors && Boolean(errors[field?.name])}>
                 <InputLabel id="select-label">{label || inputProps?.label || ''}</InputLabel>
                 <Select
                     labelId="select-label"
                     id="simple-select"
-                    label={label}
+                    label={label || inputProps?.label || ''}
                     size={size || 'medium'}
                     MenuProps={{ PaperProps: { style: { maxHeight: '24rem' } } }}
                     {...inputProps}
-                    value={value || ''}
+                    onBlur={field?.onBlur}
+                    inputRef={field?.ref}
+                    value={field?.value || ''}
                     onChange={handleOnChange}
                 >
+                    <MenuItem value="" sx={{ display: 'none' }} />
                     {data.data.map((el, i) => (
                         <MenuItem key={i} value={el[data.value]}>
                             {el[data.label]}
@@ -35,7 +48,7 @@ const SelectRender = (props) => {
                 <FormHelperText>
                     <InputMessage
                         errors={errors}
-                        name={name}
+                        name={field?.name}
                         helperText={helperText || inputProps?.helperText}
                     />
                 </FormHelperText>

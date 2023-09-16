@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Paper, Stack } from '@mui/material';
 import { hr } from 'date-fns/locale';
 
-import { Form } from '../index';
-import FormConfigProvider from '../Form/context/FormConfigProvider';
+import { Form, FormConfigProvider } from '../index';
 
 const config = { date: { adapterLocale: hr } };
 
@@ -49,9 +48,17 @@ const registerRules = [
     },
 ];
 
+const FocusOnFirstInput = ({ methods }) => {
+    useEffect(() => {
+        methods?.setFocus('email');
+    }, [methods?.setFocus]);
+
+    return null;
+};
+
 const SimpleForm = () => {
     const handleSubmit = (data) => {
-        //console.log(data);
+        console.log(data);
     };
 
     return (
@@ -62,9 +69,7 @@ const SimpleForm = () => {
                         inputs={registerRules}
                         onSubmit={handleSubmit}
                         btnMessage="Login"
-                        disableSubmitBtn={(values) => {
-                            console.log(values);
-                        }}
+                        getFormMethods={(methods) => <FocusOnFirstInput methods={methods} />}
                     />
                 </Paper>
             </Stack>

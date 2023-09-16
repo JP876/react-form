@@ -22,11 +22,14 @@ const UpdateForm = (props) => {
         clearFields = false,
         removeErrMsgs = true,
         disableSubmitBtn,
+        getFormMethods,
+        formProps = {},
     } = props;
 
     const methods = useForm({
         reValidateMode: 'onChange',
         defaultValues: useMemo(() => defaultValues, [defaultValues]),
+        ...formProps,
     });
     const { handleSubmit, control, reset, formState, ...rest } = methods;
 
@@ -46,7 +49,7 @@ const UpdateForm = (props) => {
             }, {});
 
         setSubmittedData({ ...data, ...input });
-        onSubmit({ ...data, ...input }, e);
+        typeof onSubmit === 'function' && onSubmit({ ...data, ...input }, e);
     };
 
     useEffect(() => {
@@ -64,6 +67,8 @@ const UpdateForm = (props) => {
             )}
             {removeErrMsgs && <ClearErrMsgs />}
             {clearFields && <ClearFieldsAfterSubmit submittedData={submittedData} />}
+            {typeof getFormMethods === 'function' && getFormMethods(methods)}
+
             <form onSubmit={handleSubmit(onSubmitFunc)}>
                 <InputContainer updateInputs={inputs} control={control} errors={errors} />
                 {!noBtn && (

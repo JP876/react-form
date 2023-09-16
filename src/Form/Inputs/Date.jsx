@@ -7,14 +7,13 @@ import { TextField } from '@mui/material';
 import { useFormConfigState } from '../context/FormConfigProvider.jsx';
 import InputMessage from '../InputMessage.jsx';
 
-const Date = (props) => {
-    const { value, onChange, name, errors, label, helperText, inputProps } = props;
-
+const Date = ({ field, fieldState, formState, errors, label, helperText, inputProps, methods }) => {
     const config = useFormConfigState();
 
     const handleOnChange = (newValue) => {
-        onChange(newValue);
-        typeof inputProps?.onChange === 'function' && inputProps.onChange(newValue);
+        field?.onChange(newValue);
+        typeof inputProps?.onChange === 'function' &&
+            inputProps.onChange(newValue, methods, fieldState, formState);
     };
 
     return (
@@ -27,7 +26,9 @@ const Date = (props) => {
                 inputFormat="dd/MM/yyyy"
                 label={label}
                 {...inputProps}
-                value={value}
+                onBlur={field?.onBlur}
+                inputRef={field?.ref}
+                value={field?.value}
                 onChange={handleOnChange}
                 renderInput={(params) => {
                     return (
@@ -41,11 +42,11 @@ const Date = (props) => {
                             helperText={
                                 <InputMessage
                                     errors={errors}
-                                    name={name}
+                                    name={field?.name}
                                     helperText={helperText || inputProps?.helperText}
                                 />
                             }
-                            error={errors && Boolean(errors[name])}
+                            error={errors && Boolean(errors[field?.name])}
                         />
                     );
                 }}
