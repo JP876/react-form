@@ -30,7 +30,6 @@ export const StepsForm = ({
     const handleSubmit = () => onSubmit(finalData);
 
     const handleNext = (data) => {
-        console.log(data);
         if (data && data?._reactName !== 'onClick') {
             setFinalData((prev) => ({ ...prev, ...data }));
         }
