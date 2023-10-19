@@ -18,7 +18,7 @@ const StepsFormExample = () => {
                     stepOptions={{
                         clickableStep: true,
                     }}
-                    //btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
+                    btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
                     //exitBtnFunc={() => console.log('yoo')}
                 />
             </Paper>

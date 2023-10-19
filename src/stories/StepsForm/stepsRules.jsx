@@ -1,3 +1,4 @@
+import React from 'react';
 import { Slider } from '@mui/material';
 import AddFile from './AddFile';
 import FinalStep from './FinalStep';
@@ -69,7 +70,8 @@ export const stepsRules = [
         step: 'Third step1',
         name: 'date2',
         label: 'Date',
-        input: 'date',
+        Comp: CustomFieldSlider,
+        renderForm: true,
     },
     {
         step: 'Third step2',

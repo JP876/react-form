@@ -21,12 +21,12 @@ const namesArr = [
 
 const registerRules = [
     {
-        name: 'email',
-        label: 'E-mail',
-    },
-    {
         name: 'slider',
         Comp: SliderField,
+    },
+    {
+        name: 'email',
+        label: 'E-mail',
     },
     {
         name: 'multi',

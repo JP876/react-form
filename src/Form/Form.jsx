@@ -30,9 +30,5 @@ export const Form = ({ updateData, inputs, ...rest }) => {
         return <UpdateForm inputs={inputs} {...rest} />;
     }
 
-    return (
-        defaultValues && (
-            <UpdateForm inputs={fields} defaultValues={defaultValues} {...rest} />
-        )
-    );
+    return defaultValues && <UpdateForm inputs={fields} defaultValues={defaultValues} {...rest} />;
 };

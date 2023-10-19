@@ -13,7 +13,7 @@ const SubmitButtons = ({ options: { trigger, clearErrors, getValues }, setFormDa
             .then((data) => {
                 if (!data) {
                     setTimeout(() => clearErrors(), 5000);
-                    return Promise.reject();
+                    throw new Error('Error');
                 }
             })
             .then(() => {
