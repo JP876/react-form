@@ -3,8 +3,8 @@ import { Divider } from '@mui/material';
 import { Box } from '@mui/system';
 
 import addDefaultValues from '../helpers/addDefaultValues';
-import Steps from './Steps';
-import StepForm from './StepForm';
+import Steps from './Steps.jsx';
+import StepForm from './StepForm.jsx';
 
 export const StepsForm = ({
     inputs,

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-import UpdateForm from '../UpdateForm';
-import BackStepBtn from '../BackStepBtn';
+import UpdateForm from '../UpdateForm.jsx';
+import BackStepBtn from '../BackStepBtn.jsx';
 
 const StepForm = ({
     input,
