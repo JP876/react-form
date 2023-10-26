@@ -36,11 +36,11 @@ const StepForm = ({
         <UpdateForm
             inputs={input}
             onSubmit={handleNext}
-            btnMessage={buttonMessages.nextStep || 'Next'}
+            btnMessage={buttonMessages?.nextStep || 'Next'}
         >
             {typeof exitBtnFunc === 'function' ? (
                 <Button onClick={exitBtnFunc} color="error" variant="outlined">
-                    {buttonMessages.exit || 'Close'}
+                    {buttonMessages?.exit || 'Close'}
                 </Button>
             ) : (
                 <></>
@@ -52,7 +52,7 @@ const StepForm = ({
                 setActiveStep={setActiveStep}
                 saveOnBackBtn={saveOnBackBtn}
             >
-                {buttonMessages.prevStep || 'Back'}
+                {buttonMessages?.prevStep || 'Back'}
             </BackStepBtn>
         </UpdateForm>
     );
