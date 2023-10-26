@@ -33,12 +33,14 @@ const Steps = ({
     stepButtonProps,
 }) => {
     const handleStep = (step) => () => {
+        if (!clickableStep) return null;
         const disabled = handleCheckDisable(step, steps, fields, activeStep);
 
         if (disabled) return null;
 
         const submitButton = document.querySelector('#form-submit-button');
         const customStepNextButton = document.getElementById('step-form-next-btn');
+        const backBtn = document.getElementById('steps-form-back-btn');
 
         if (step > activeStep) {
             if (submitButton) {
@@ -51,6 +53,7 @@ const Steps = ({
                 setActiveStep(step);
             }
         } else {
+            if (backBtn) backBtn.click();
             setActiveStep(step);
         }
     };
@@ -61,12 +64,14 @@ const Steps = ({
                 <Step key={label}>
                     <StepLabel
                         sx={{
-                            cursor: 'pointer',
-                            '&.Mui-disabled': {
-                                cursor: handleCheckDisable(i, steps, fields, activeStep)
-                                    ? 'default'
-                                    : 'pointer',
-                            },
+                            ...(clickableStep && {
+                                cursor: 'pointer',
+                                '&.Mui-disabled': {
+                                    cursor: handleCheckDisable(i, steps, fields, activeStep)
+                                        ? 'default'
+                                        : 'pointer',
+                                },
+                            }),
                         }}
                         {...stepLabelProps}
                         onClick={handleStep(i)}

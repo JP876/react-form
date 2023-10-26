@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Stack } from '@mui/material';
 
 import { StepsForm } from '../../index';
 import { stepsRules } from './stepsRules';
+
+const stepOptions = { clickableStep: true };
 
 const StepsFormExample = () => {
     const handleSubmit = (data) => {
@@ -15,11 +17,15 @@ const StepsFormExample = () => {
                 <StepsForm
                     inputs={stepsRules}
                     onSubmit={handleSubmit}
-                    stepOptions={{
-                        clickableStep: true,
-                    }}
-                    btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
-                    //exitBtnFunc={() => console.log('yoo')}
+                    stepOptions={stepOptions}
+                    // saveOnBackBtn
+                    // btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
+                    btnMsgs={[
+                        // { step: 'Third step2', nextStep: 'Add' },
+                        // Default button messages
+                        { nextStep: 'Next', prevStep: 'Back', exit: 'Close' },
+                    ]}
+                    // exitBtnFunc={() => console.log('yoo')}
                 />
             </Paper>
         </Stack>

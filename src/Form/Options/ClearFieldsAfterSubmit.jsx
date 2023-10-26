@@ -3,17 +3,17 @@ import { useFormContext } from 'react-hook-form';
 
 import empty from '../helpers/empty';
 
-const ClearFieldsAfterSubmit = ({ submittedData }) => {
+const ClearFieldsAfterSubmit = () => {
     const {
         reset,
-        formState: { isSubmitSuccessful },
+        formState: { isSubmitSuccessful, defaultValues },
     } = useFormContext();
 
     useEffect(() => {
         if (isSubmitSuccessful) {
-            reset(empty(submittedData));
+            reset(empty(defaultValues));
         }
-    }, [isSubmitSuccessful, submittedData, reset]);
+    }, [isSubmitSuccessful, reset, defaultValues]);
 
     return null;
 };

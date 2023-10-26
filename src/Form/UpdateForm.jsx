@@ -34,8 +34,6 @@ const UpdateForm = (props) => {
     const { handleSubmit, control, reset, formState, ...rest } = methods;
 
     const [disableBtn, setDisableBtn] = useState(false);
-    const [submittedData, setSubmittedData] = useState({});
-
     const { errors } = formState;
 
     const onSubmitFunc = (data, e) => {
@@ -48,7 +46,6 @@ const UpdateForm = (props) => {
                 return Object.assign(obj, { [key.name]: false });
             }, {});
 
-        setSubmittedData({ ...data, ...input });
         typeof onSubmit === 'function' && onSubmit({ ...data, ...input }, e);
     };
 
@@ -66,7 +63,7 @@ const UpdateForm = (props) => {
                 />
             )}
             {removeErrMsgs && <ClearErrMsgs />}
-            {clearFields && <ClearFieldsAfterSubmit submittedData={submittedData} />}
+            {clearFields && <ClearFieldsAfterSubmit />}
             {typeof getFormMethods === 'function' && getFormMethods(methods)}
 
             <form onSubmit={handleSubmit(onSubmitFunc)}>
@@ -79,7 +76,6 @@ const UpdateForm = (props) => {
                                 React.cloneElement(child, {
                                     options: {
                                         control,
-                                        submittedData,
                                         errors,
                                         formState,
                                         ...rest,

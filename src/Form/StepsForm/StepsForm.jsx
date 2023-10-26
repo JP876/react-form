@@ -16,6 +16,7 @@ export const StepsForm = ({
         stepButtonProps: {},
         stepLabelProps: {},
     },
+    saveOnBackBtn = false,
 }) => {
     const { clickableStep, stepButtonProps, stepLabelProps } = stepOptions;
 
@@ -30,13 +31,16 @@ export const StepsForm = ({
     const handleSubmit = () => onSubmit(finalData);
 
     const handleNext = (data) => {
-        if (data && data?._reactName !== 'onClick') {
+        if (activeStep === steps.length - 1) {
             setFinalData((prev) => ({ ...prev, ...data }));
-        }
+            setTimeout(() => onSubmit({ ...finalData, ...data }), 0);
+        } else {
+            if (data && data?._reactName !== 'onClick') {
+                setFinalData((prev) => ({ ...prev, ...data }));
+            }
 
-        setActiveStep((prevActiveStep) => {
-            return prevActiveStep + 1;
-        });
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     };
 
     const handlePrevStep = (data) => {
@@ -121,14 +125,14 @@ export const StepsForm = ({
                         <Box key={input[0]?.step}>
                             <StepForm
                                 input={input}
-                                activeStep={activeStep}
                                 steps={steps}
-                                handleSubmit={handleSubmit}
+                                activeStep={activeStep}
                                 handleNext={handleNext}
                                 btnMsgs={btnMsgs}
                                 setFinalData={setFinalData}
                                 setActiveStep={setActiveStep}
                                 exitBtnFunc={exitBtnFunc}
+                                saveOnBackBtn={saveOnBackBtn}
                             />
                         </Box>
                     );

@@ -68,12 +68,12 @@ export const stepsRules = [
     },
     {
         step: 'Third step1',
-        name: 'date2',
+        name: 'slider2',
         label: 'Date',
         Comp: CustomFieldSlider,
         renderForm: true,
     },
-    {
+    /* {
         step: 'Third step2',
         name: 'date3',
         label: 'Date',
@@ -86,12 +86,12 @@ export const stepsRules = [
         step: 'Fourth step',
         name: 'selectedFile',
         Comp: AddFile,
-        /* rules: {
+        rules: {
             required: 'This field is required',
-        }, */
+        },
     },
     {
         step: 'Final step',
         Comp: FinalStep,
-    },
+    }, */
 ];

@@ -1,26 +1,26 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
-const BackStepBtn = ({
-    options: { submittedData },
-    setFinalData,
-    setActiveStep,
-    activeStep,
-    btnMsg,
-}) => {
+const BackStepBtn = ({ setFinalData, setActiveStep, activeStep, saveOnBackBtn, children }) => {
+    const { watch } = useFormContext();
+
     const handleValues = () => {
-        //setFinalData((prev) => ({ ...prev, ...submittedData }));
+        if (saveOnBackBtn) {
+            setFinalData((prev) => ({ ...prev, ...watch() }));
+        }
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     return (
         <Button
+            id="steps-form-back-btn"
             disabled={activeStep === 0}
             onClick={handleValues}
             color="error"
             variant="outlined"
         >
-            {btnMsg}
+            {children}
         </Button>
     );
 };
