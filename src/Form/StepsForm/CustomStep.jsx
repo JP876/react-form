@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider';
 
-const CustomStep = ({ Comp }) => {
+const CustomStep = ({ input: { Comp } }) => {
     const { handleNext, handlePrevStep, handleSubmit } = useStepsFormDispatch();
     const { finalData } = useStepsFormState();
 

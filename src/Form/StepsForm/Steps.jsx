@@ -24,7 +24,7 @@ const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
     return stepIndex > index;
 };
 
-const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
+const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }) => {
     const { setActiveStep } = useStepsFormDispatch();
     const { steps, activeStep, fields } = useStepsFormState();
 
@@ -34,8 +34,11 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
 
         if (disabled) return null;
 
-        const nextBtn = document.querySelectorAll('#step-form-next-btn')?.[activeStep];
-        const backBtn = document.querySelectorAll('#steps-form-back-btn')?.[activeStep];
+        let nextBtn = document.querySelectorAll('#step-form-next-btn');
+        let backBtn = document.querySelectorAll('#steps-form-back-btn');
+
+        nextBtn.length > 1 ? (nextBtn = nextBtn[activeStep]) : (nextBtn = nextBtn?.[0]);
+        backBtn.length > 1 ? (backBtn = backBtn[activeStep]) : (backBtn = backBtn?.[0]);
 
         if (step > activeStep) {
             if (nextBtn) {
@@ -43,7 +46,7 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
                 nextBtn?.type === 'submit' ? setActiveStep(step - 1) : setActiveStep(step);
             }
         } else {
-            if (backBtn) backBtn.click();
+            if (backBtn && saveOnBackBtn) backBtn.click();
             setActiveStep(step);
         }
     };

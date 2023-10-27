@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 import addDefaultValues from '../helpers/addDefaultValues';
 
@@ -16,6 +16,8 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
     const [finalData, setFinalData] = useState(
         inputs.reduce((o, key) => ({ ...o, [key.name]: '' }), {})
     );
+
+    const justMounted = useRef(true);
 
     const handleSubmit = () => onSubmit(finalData);
 
@@ -42,12 +44,17 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
 
     // handle steps and inputs for step form
     useEffect(() => {
-        const stepsSet = new Set();
-        fields.forEach((el) => stepsSet.add(el.step));
-        setSteps([...stepsSet]);
-        setFilteredInputs(
-            [...stepsSet].map((step) => fields.filter((input) => input.step === step))
-        );
+        if (fields.length !== 0) {
+            if (justMounted.current) {
+                const stepsSet = new Set();
+                fields.forEach((el) => stepsSet.add(el.step));
+                setSteps([...stepsSet]);
+                setFilteredInputs(
+                    [...stepsSet].map((step) => fields.filter((input) => input.step === step))
+                );
+            }
+            justMounted.current = false;
+        }
     }, [fields]);
 
     // handle updating default values

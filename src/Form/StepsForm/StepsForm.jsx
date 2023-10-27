@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Divider } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -18,10 +18,37 @@ const StepsFormContainer = ({
         stepLabelProps: {},
     },
     saveOnBackBtn = false,
-    mountOnlyActiveStep = false,
+    mountOnlyActiveStep = true,
 }) => {
-    const { clickableStep, stepButtonProps, stepLabelProps } = stepOptions;
     const { filteredInputs, steps, activeStep } = useStepsFormState();
+
+    const renderSteps = useCallback(() => {
+        const currentStep = filteredInputs.find((arr) => arr?.[0]?.step === steps[activeStep]);
+
+        if (currentStep) {
+            if (
+                Array.isArray(currentStep) &&
+                currentStep.length === 1 &&
+                !currentStep?.[0]?.renderForm &&
+                currentStep?.[0]?.Comp
+            ) {
+                return <CustomStep input={currentStep[0]} />;
+            } else if (
+                (Array.isArray(currentStep) && currentStep.length !== 0) ||
+                currentStep?.[0]?.renderForm
+            ) {
+                return (
+                    <StepForm
+                        input={currentStep}
+                        btnMsgs={btnMsgs}
+                        exitBtnFunc={exitBtnFunc}
+                        saveOnBackBtn={saveOnBackBtn}
+                    />
+                );
+            }
+        }
+        return null;
+    }, [activeStep, steps, filteredInputs, btnMsgs, exitBtnFunc, saveOnBackBtn]);
 
     if (!inputs && !onSubmit && filteredInputs.length === 0) {
         return null;
@@ -29,30 +56,21 @@ const StepsFormContainer = ({
 
     return (
         <Box className="stepForm-container">
-            <Steps
-                stepLabelProps={stepLabelProps}
-                clickableStep={clickableStep}
-                stepButtonProps={stepButtonProps}
-            />
+            <Steps {...stepOptions} saveOnBackBtn={saveOnBackBtn} />
 
             <Divider />
 
-            {filteredInputs.map((input, index) => {
-                let currentStep = input?.[0]?.step === steps[activeStep];
+            {mountOnlyActiveStep && renderSteps()}
+            {!mountOnlyActiveStep &&
+                filteredInputs.map((input, index) => {
+                    let currentStep = input?.[0]?.step === steps[activeStep];
 
-                if (
-                    Array.isArray(input) &&
-                    input.length === 1 &&
-                    !input?.[0]?.renderForm &&
-                    input?.[0]?.Comp
-                ) {
-                    if (currentStep && mountOnlyActiveStep) {
-                        return (
-                            <Box key={input[0]?.step || `steps-form_step-${index}`}>
-                                <CustomStep input={input[0]} />
-                            </Box>
-                        );
-                    } else if (!mountOnlyActiveStep) {
+                    if (
+                        Array.isArray(input) &&
+                        input.length === 1 &&
+                        !input?.[0]?.renderForm &&
+                        input?.[0]?.Comp
+                    ) {
                         return (
                             <Box
                                 key={input[0]?.step || `steps-form_step-${index}`}
@@ -62,21 +80,8 @@ const StepsFormContainer = ({
                             </Box>
                         );
                     }
-                }
 
-                if ((Array.isArray(input) && input.length !== 0) || input?.[0]?.renderForm) {
-                    if (currentStep && mountOnlyActiveStep) {
-                        return (
-                            <Box key={input[0]?.step || `steps-form_step-${index}`}>
-                                <StepForm
-                                    input={input}
-                                    btnMsgs={btnMsgs}
-                                    exitBtnFunc={exitBtnFunc}
-                                    saveOnBackBtn={saveOnBackBtn}
-                                />
-                            </Box>
-                        );
-                    } else if (!mountOnlyActiveStep) {
+                    if ((Array.isArray(input) && input.length !== 0) || input?.[0]?.renderForm) {
                         return (
                             <Box
                                 key={input[0]?.step || `steps-form_step-${index}`}
@@ -91,10 +96,9 @@ const StepsFormContainer = ({
                             </Box>
                         );
                     }
-                }
 
-                return null;
-            })}
+                    return null;
+                })}
         </Box>
     );
 };
