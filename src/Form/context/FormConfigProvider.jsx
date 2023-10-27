@@ -10,7 +10,7 @@ const defaultConfig = {
 };
 
 const FormConfigProvider = ({ config, children }) => {
-    const configValue = React.useMemo(() => config, []);
+    const configValue = React.useMemo(() => config, [config]);
 
     return <FormConfigState.Provider value={configValue}>{children}</FormConfigState.Provider>;
 };

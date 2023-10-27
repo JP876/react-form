@@ -18,6 +18,7 @@ const StepsFormContainer = ({
         stepLabelProps: {},
     },
     saveOnBackBtn = false,
+    mountOnlyActiveStep = false,
 }) => {
     const { clickableStep, stepButtonProps, stepLabelProps } = stepOptions;
     const { filteredInputs, steps, activeStep } = useStepsFormState();
@@ -45,30 +46,51 @@ const StepsFormContainer = ({
                     !input?.[0]?.renderForm &&
                     input?.[0]?.Comp
                 ) {
-                    return (
-                        <Box
-                            key={input[0]?.step || `steps-form_step-${index}`}
-                            sx={{ display: currentStep ? 'block' : 'none' }}
-                        >
-                            <CustomStep input={input[0]} />
-                        </Box>
-                    );
+                    if (currentStep && mountOnlyActiveStep) {
+                        return (
+                            <Box key={input[0]?.step || `steps-form_step-${index}`}>
+                                <CustomStep input={input[0]} />
+                            </Box>
+                        );
+                    } else if (!mountOnlyActiveStep) {
+                        return (
+                            <Box
+                                key={input[0]?.step || `steps-form_step-${index}`}
+                                sx={{ display: currentStep ? 'block' : 'none' }}
+                            >
+                                <CustomStep input={input[0]} />
+                            </Box>
+                        );
+                    }
                 }
 
                 if ((Array.isArray(input) && input.length !== 0) || input?.[0]?.renderForm) {
-                    return (
-                        <Box
-                            key={input[0]?.step || `steps-form_step-${index}`}
-                            sx={{ display: currentStep ? 'block' : 'none' }}
-                        >
-                            <StepForm
-                                input={input}
-                                btnMsgs={btnMsgs}
-                                exitBtnFunc={exitBtnFunc}
-                                saveOnBackBtn={saveOnBackBtn}
-                            />
-                        </Box>
-                    );
+                    if (currentStep && mountOnlyActiveStep) {
+                        return (
+                            <Box key={input[0]?.step || `steps-form_step-${index}`}>
+                                <StepForm
+                                    input={input}
+                                    btnMsgs={btnMsgs}
+                                    exitBtnFunc={exitBtnFunc}
+                                    saveOnBackBtn={saveOnBackBtn}
+                                />
+                            </Box>
+                        );
+                    } else if (!mountOnlyActiveStep) {
+                        return (
+                            <Box
+                                key={input[0]?.step || `steps-form_step-${index}`}
+                                sx={{ display: currentStep ? 'block' : 'none' }}
+                            >
+                                <StepForm
+                                    input={input}
+                                    btnMsgs={btnMsgs}
+                                    exitBtnFunc={exitBtnFunc}
+                                    saveOnBackBtn={saveOnBackBtn}
+                                />
+                            </Box>
+                        );
+                    }
                 }
 
                 return null;
