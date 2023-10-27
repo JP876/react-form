@@ -84,8 +84,6 @@ const UpdateForm = (props) => {
                             )}
                             {btnMessage && (
                                 <Button
-                                    // id for step form
-                                    id="form-submit-button"
                                     disabled={disableBtn}
                                     type="submit"
                                     variant="contained"

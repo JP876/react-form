@@ -38,19 +38,13 @@ const Steps = ({
 
         if (disabled) return null;
 
-        const submitButton = document.querySelector('#form-submit-button');
-        const customStepNextButton = document.getElementById('step-form-next-btn');
-        const backBtn = document.getElementById('steps-form-back-btn');
+        const nextBtn = document.querySelectorAll('#step-form-next-btn')?.[activeStep];
+        const backBtn = document.querySelectorAll('#steps-form-back-btn')?.[activeStep];
 
         if (step > activeStep) {
-            if (submitButton) {
-                submitButton.click();
-                setActiveStep(step - 1);
-            } else {
-                if (customStepNextButton) {
-                    customStepNextButton.click();
-                }
-                setActiveStep(step);
+            if (nextBtn) {
+                nextBtn.click();
+                nextBtn?.type === 'submit' ? setActiveStep(step - 1) : setActiveStep(step);
             }
         } else {
             if (backBtn) backBtn.click();

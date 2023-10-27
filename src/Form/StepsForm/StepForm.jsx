@@ -5,6 +5,7 @@ import UpdateForm from '../UpdateForm.jsx';
 import BackStepBtn from './BackStepBtn.jsx';
 
 const StepForm = ({
+    index,
     input,
     steps,
     activeStep,
@@ -33,11 +34,7 @@ const StepForm = ({
     }, [btnMsgs, activeStep]);
 
     return (
-        <UpdateForm
-            inputs={input}
-            onSubmit={handleNext}
-            btnMessage={buttonMessages?.nextStep || 'Next'}
-        >
+        <UpdateForm inputs={input} onSubmit={handleNext}>
             {typeof exitBtnFunc === 'function' ? (
                 <Button onClick={exitBtnFunc} color="error" variant="outlined">
                     {buttonMessages?.exit || 'Close'}
@@ -48,12 +45,19 @@ const StepForm = ({
 
             <BackStepBtn
                 setFinalData={setFinalData}
-                activeStep={activeStep}
                 setActiveStep={setActiveStep}
                 saveOnBackBtn={saveOnBackBtn}
+                btnProps={{
+                    id: 'steps-form-back-btn',
+                    disabled: activeStep === 0,
+                }}
             >
                 {buttonMessages?.prevStep || 'Back'}
             </BackStepBtn>
+
+            <Button id="step-form-next-btn" type="submit" variant="contained" color="primary">
+                {buttonMessages?.nextStep || 'Next'}
+            </Button>
         </UpdateForm>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
-const BackStepBtn = ({ setFinalData, setActiveStep, activeStep, saveOnBackBtn, children }) => {
+const BackStepBtn = ({ setFinalData, setActiveStep, saveOnBackBtn, btnProps, children }) => {
     const { watch } = useFormContext();
 
     const handleValues = () => {
@@ -13,13 +13,7 @@ const BackStepBtn = ({ setFinalData, setActiveStep, activeStep, saveOnBackBtn, c
     };
 
     return (
-        <Button
-            id="steps-form-back-btn"
-            disabled={activeStep === 0}
-            onClick={handleValues}
-            color="error"
-            variant="outlined"
-        >
+        <Button onClick={handleValues} color="error" variant="outlined" {...btnProps}>
             {children}
         </Button>
     );

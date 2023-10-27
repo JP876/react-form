@@ -73,7 +73,7 @@ export const stepsRules = [
         Comp: CustomFieldSlider,
         renderForm: true,
     },
-    /* {
+    {
         step: 'Third step2',
         name: 'date3',
         label: 'Date',
@@ -93,5 +93,5 @@ export const stepsRules = [
     {
         step: 'Final step',
         Comp: FinalStep,
-    }, */
+    },
 ];

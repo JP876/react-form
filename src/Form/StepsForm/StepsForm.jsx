@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Divider } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -51,7 +51,7 @@ export const StepsForm = ({
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const renderCustomComponent = (input) => {
+    const renderCustomComponent = useCallback((input) => {
         const { Comp } = input;
         if (!Comp) return null;
 
@@ -65,7 +65,7 @@ export const StepsForm = ({
                 }}
             />
         );
-    };
+    }, []);
 
     // handle steps and inputs for step form
     useEffect(() => {
@@ -106,24 +106,33 @@ export const StepsForm = ({
 
             <Divider />
 
-            {filteredInputs.map((input) => {
+            {filteredInputs.map((input, index) => {
+                let currentStep = input?.[0]?.step === steps[activeStep];
+
                 if (
                     Array.isArray(input) &&
                     input.length === 1 &&
                     !input?.[0]?.renderForm &&
-                    input?.[0]?.step === steps[activeStep] &&
                     input?.[0]?.Comp
                 ) {
-                    return <Box key={input[0]?.step}>{renderCustomComponent(input[0])}</Box>;
+                    return (
+                        <Box
+                            key={input[0]?.step || `steps-form_step-${index}`}
+                            sx={{ display: currentStep ? 'block' : 'none' }}
+                        >
+                            {renderCustomComponent(input[0])}
+                        </Box>
+                    );
                 }
 
-                if (
-                    ((Array.isArray(input) && input.length !== 0) || input?.[0]?.renderForm) &&
-                    input?.[0]?.step === steps[activeStep]
-                ) {
+                if ((Array.isArray(input) && input.length !== 0) || input?.[0]?.renderForm) {
                     return (
-                        <Box key={input[0]?.step}>
+                        <Box
+                            key={input[0]?.step || `steps-form_step-${index}`}
+                            sx={{ display: currentStep ? 'block' : 'none' }}
+                        >
                             <StepForm
+                                index={index}
                                 input={input}
                                 steps={steps}
                                 activeStep={activeStep}
