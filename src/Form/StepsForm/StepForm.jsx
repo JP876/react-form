@@ -3,19 +3,12 @@ import { Button } from '@mui/material';
 
 import UpdateForm from '../UpdateForm.jsx';
 import BackStepBtn from './BackStepBtn.jsx';
+import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
-const StepForm = ({
-    index,
-    input,
-    steps,
-    activeStep,
-    handleNext,
-    btnMsgs,
-    setFinalData,
-    setActiveStep,
-    exitBtnFunc,
-    saveOnBackBtn,
-}) => {
+const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn }) => {
+    const { handleNext } = useStepsFormDispatch();
+    const { steps, activeStep } = useStepsFormState();
+
     const buttonMessages = useMemo(() => {
         if (Array.isArray(btnMsgs)) {
             const defaultBtnMsgs = btnMsgs.find((el) => !el?.step);
@@ -31,7 +24,7 @@ const StepForm = ({
         }
 
         return btnMsgs;
-    }, [btnMsgs, activeStep]);
+    }, [btnMsgs, activeStep, steps]);
 
     return (
         <UpdateForm inputs={input} onSubmit={handleNext}>
@@ -44,8 +37,6 @@ const StepForm = ({
             )}
 
             <BackStepBtn
-                setFinalData={setFinalData}
-                setActiveStep={setActiveStep}
                 saveOnBackBtn={saveOnBackBtn}
                 btnProps={{
                     id: 'steps-form-back-btn',

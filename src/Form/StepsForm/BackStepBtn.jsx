@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
+import { useStepsFormDispatch } from '../context/StepsFormProvider';
 
-const BackStepBtn = ({ setFinalData, setActiveStep, saveOnBackBtn, btnProps, children }) => {
+const BackStepBtn = ({ saveOnBackBtn, btnProps, children }) => {
     const { watch } = useFormContext();
+    const { setFinalData, setActiveStep } = useStepsFormDispatch();
 
     const handleValues = () => {
         if (saveOnBackBtn) {

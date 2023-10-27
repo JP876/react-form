@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Step, StepLabel, Stepper } from '@mui/material';
+import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider';
 
 const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
     const requiredStep = inputs.filter(
@@ -23,15 +24,10 @@ const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
     return stepIndex > index;
 };
 
-const Steps = ({
-    steps,
-    activeStep,
-    setActiveStep,
-    fields,
-    stepLabelProps,
-    clickableStep,
-    stepButtonProps,
-}) => {
+const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
+    const { setActiveStep } = useStepsFormDispatch();
+    const { steps, activeStep, fields } = useStepsFormState();
+
     const handleStep = (step) => () => {
         if (!clickableStep) return null;
         const disabled = handleCheckDisable(step, steps, fields, activeStep);
