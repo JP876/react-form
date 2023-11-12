@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Paper, Stack } from '@mui/material';
 
 import { StepsForm } from '../../index';
@@ -19,6 +19,7 @@ const StepsFormExample = () => {
                     onSubmit={handleSubmit}
                     stepOptions={stepOptions}
                     // saveOnBackBtn
+                    // mountOnlyActiveStep={false}
                     // btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
                     btnMsgs={[
                         // { step: 'Third step2', nextStep: 'Add' },

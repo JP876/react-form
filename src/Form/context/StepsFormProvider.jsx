@@ -12,7 +12,6 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [fields, setFields] = useState([]);
     const [steps, setSteps] = useState([]);
-    const [filteredInputs, setFilteredInputs] = useState([]);
     const [finalData, setFinalData] = useState(
         inputs.reduce((o, key) => ({ ...o, [key.name]: '' }), {})
     );
@@ -49,9 +48,6 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
                 const stepsSet = new Set();
                 fields.forEach((el) => stepsSet.add(el.step));
                 setSteps([...stepsSet]);
-                setFilteredInputs(
-                    [...stepsSet].map((step) => fields.filter((input) => input.step === step))
-                );
             }
             justMounted.current = false;
         }
@@ -72,9 +68,7 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
         <StepsFormDispatch.Provider
             value={{ handleNext, handlePrevStep, handleSubmit, setActiveStep, setFinalData }}
         >
-            <StepsFormState.Provider
-                value={{ filteredInputs, steps, activeStep, finalData, fields }}
-            >
+            <StepsFormState.Provider value={{ steps, activeStep, finalData, fields }}>
                 {children}
             </StepsFormState.Provider>
         </StepsFormDispatch.Provider>
