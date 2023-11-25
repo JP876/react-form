@@ -41,7 +41,6 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    // handle steps and inputs for step form
     useEffect(() => {
         if (fields.length !== 0) {
             if (justMounted.current) {

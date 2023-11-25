@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Divider } from '@mui/material';
 import { Box } from '@mui/system';
 
 import Steps from './Steps.jsx';
 import StepForm from './StepForm.jsx';
-import StepsFormProvider, { useStepsFormState } from '../context/StepsFormProvider';
 import CustomStep from './CustomStep.jsx';
+import StepsFormProvider, { useStepsFormState } from '../context/StepsFormProvider';
 
 const checkCurrentStep = (input) => {
     if (Array.isArray(input) && input.length === 1 && !input?.[0]?.renderForm && input?.[0]?.Comp) {
@@ -14,6 +14,23 @@ const checkCurrentStep = (input) => {
         return 'form-step';
     }
     return null;
+};
+
+const SingleStepContainer = (props) => {
+    const { steps, activeStep, fields } = useStepsFormState();
+
+    const currentStep = useMemo(() => {
+        return fields.filter((i) => i?.step === steps[activeStep]);
+    }, [activeStep, steps, fields]);
+    const step = useMemo(() => checkCurrentStep(currentStep), [currentStep]);
+
+    if (!currentStep || step === null) return null;
+
+    return step === 'custom-step' ? (
+        <CustomStep input={currentStep[0]} />
+    ) : (
+        <StepForm input={currentStep} {...props} />
+    );
 };
 
 const StepsFormContainer = ({
@@ -32,32 +49,11 @@ const StepsFormContainer = ({
     const { steps, activeStep, fields } = useStepsFormState();
 
     const filteredInputs = useMemo(() => {
+        if (!Array.isArray(steps)) return null;
         return steps.map((step) => fields.filter((input) => input.step === step));
     }, [fields, steps]);
 
-    const renderSteps = useCallback(() => {
-        const currentStep = fields.filter((i) => i?.step === steps[activeStep]);
-        const step = checkCurrentStep(currentStep);
-
-        if (currentStep && step !== null) {
-            if (step === 'custom-step') {
-                return <CustomStep input={currentStep[0]} />;
-            } else {
-                return (
-                    <StepForm
-                        input={currentStep}
-                        btnMsgs={btnMsgs}
-                        exitBtnFunc={exitBtnFunc}
-                        saveOnBackBtn={saveOnBackBtn}
-                    />
-                );
-            }
-        }
-
-        return null;
-    }, [activeStep, steps, fields, btnMsgs, exitBtnFunc, saveOnBackBtn]);
-
-    if (!inputs && !onSubmit && filteredInputs.length === 0) {
+    if (!inputs || !onSubmit || filteredInputs.length === 0) {
         return null;
     }
 
@@ -67,37 +63,36 @@ const StepsFormContainer = ({
 
             <Divider />
 
-            {mountOnlyActiveStep && renderSteps()}
+            {mountOnlyActiveStep && (
+                <SingleStepContainer
+                    btnMsgs={btnMsgs}
+                    exitBtnFunc={exitBtnFunc}
+                    saveOnBackBtn={saveOnBackBtn}
+                />
+            )}
             {!mountOnlyActiveStep &&
                 filteredInputs.map((input, index) => {
                     const currentStep = input?.[0]?.step === steps[activeStep];
                     const step = checkCurrentStep(currentStep);
 
                     if (currentStep && step !== null) {
-                        if (step === 'custom-step') {
-                            return (
-                                <Box
-                                    key={input[0]?.step || `steps-form_step-${index}`}
-                                    sx={{ display: currentStep ? 'block' : 'none' }}
-                                >
+                        return (
+                            <Box
+                                key={input[0]?.step || `steps-form_step-${index}`}
+                                sx={{ display: currentStep ? 'block' : 'none' }}
+                            >
+                                {step === 'custom-step' ? (
                                     <CustomStep input={input[0]} />
-                                </Box>
-                            );
-                        } else {
-                            return (
-                                <Box
-                                    key={input[0]?.step || `steps-form_step-${index}`}
-                                    sx={{ display: currentStep ? 'block' : 'none' }}
-                                >
+                                ) : (
                                     <StepForm
                                         input={input}
                                         btnMsgs={btnMsgs}
                                         exitBtnFunc={exitBtnFunc}
                                         saveOnBackBtn={saveOnBackBtn}
                                     />
-                                </Box>
-                            );
-                        }
+                                )}
+                            </Box>
+                        );
                     }
 
                     return null;
