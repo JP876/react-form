@@ -6,6 +6,7 @@ import InputContainer from './InputContainer.jsx';
 import DisableSubmitBtn from './Options/DisableSubmitBtn.jsx';
 import ClearErrMsgs from './Options/ClearErrMsgs.jsx';
 import ClearFieldsAfterSubmit from './Options/ClearFieldsAfterSubmit.jsx';
+import UpdateClickableStep from './Options/UpdateClickableStep.jsx';
 
 import './styles/style.css';
 
@@ -24,6 +25,9 @@ const UpdateForm = (props) => {
         disableSubmitBtn,
         getFormMethods,
         formProps = {},
+        // Steps form props
+        clickableStep = false,
+        currentStep = false,
     } = props;
 
     const methods = useForm({
@@ -34,6 +38,7 @@ const UpdateForm = (props) => {
     const { handleSubmit, control, reset, formState, ...rest } = methods;
 
     const [disableBtn, setDisableBtn] = useState(false);
+    const [isStepForm, setIsStepForm] = useState(false);
     const { errors } = formState;
 
     const onSubmitFunc = (data, e) => {
@@ -53,6 +58,10 @@ const UpdateForm = (props) => {
         updateDefaultValues && reset(defaultValues);
     }, [defaultValues, reset, updateDefaultValues]);
 
+    useEffect(() => {
+        setIsStepForm(!!document.getElementById('step-form-container'));
+    }, []);
+
     return (
         <FormProvider {...methods}>
             {(updateDisable || typeof disableSubmitBtn === 'function') && (
@@ -64,6 +73,7 @@ const UpdateForm = (props) => {
             )}
             {removeErrMsgs && <ClearErrMsgs />}
             {clearFields && <ClearFieldsAfterSubmit />}
+            {clickableStep && <UpdateClickableStep currentStep={currentStep} />}
             {typeof getFormMethods === 'function' && getFormMethods(methods)}
 
             <form onSubmit={handleSubmit(onSubmitFunc)}>

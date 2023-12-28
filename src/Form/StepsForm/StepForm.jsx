@@ -5,7 +5,7 @@ import UpdateForm from '../UpdateForm.jsx';
 import BackStepBtn from './BackStepBtn.jsx';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
-const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn }) => {
+const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn, clickableStep, currentStep }) => {
     const { handleNext } = useStepsFormDispatch();
     const { steps, activeStep } = useStepsFormState();
 
@@ -27,7 +27,12 @@ const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn }) => {
     }, [btnMsgs, activeStep, steps]);
 
     return (
-        <UpdateForm inputs={input} onSubmit={handleNext}>
+        <UpdateForm
+            inputs={input}
+            onSubmit={handleNext}
+            clickableStep={clickableStep}
+            currentStep={currentStep}
+        >
             {typeof exitBtnFunc === 'function' ? (
                 <Button onClick={exitBtnFunc} color="error" variant="outlined">
                     {buttonMessages?.exit || 'Close'}

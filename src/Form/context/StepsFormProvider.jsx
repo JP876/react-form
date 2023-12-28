@@ -16,6 +16,9 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
         inputs.reduce((o, key) => ({ ...o, [key.name]: '' }), {})
     );
 
+    const [disabledStep, setDisabledStep] = useState([]);
+    const [values, setValues] = useState({});
+
     const justMounted = useRef(true);
 
     const handleSubmit = () => onSubmit(finalData);
@@ -65,9 +68,19 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
 
     return (
         <StepsFormDispatch.Provider
-            value={{ handleNext, handlePrevStep, handleSubmit, setActiveStep, setFinalData }}
+            value={{
+                handleNext,
+                handlePrevStep,
+                handleSubmit,
+                setActiveStep,
+                setFinalData,
+                setDisabledStep,
+                setValues,
+            }}
         >
-            <StepsFormState.Provider value={{ steps, activeStep, finalData, fields }}>
+            <StepsFormState.Provider
+                value={{ steps, activeStep, finalData, fields, disabledStep, values }}
+            >
                 {children}
             </StepsFormState.Provider>
         </StepsFormDispatch.Provider>

@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button, Step, StepLabel, Stepper } from '@mui/material';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider';
-
-const handleCheckDisable = (stepIndex, steps, inputs, activeStepIndex) => {
-    const requiredStep = inputs.filter(
-        (i) => i.rules && i.rules.hasOwnProperty('required') && !i.defaultValue
-    );
-
-    if (requiredStep.length === 0) return false;
-    let index = steps.length;
-
-    const requiredStepIndexes = requiredStep.map((s) =>
-        steps.findIndex((label) => label === s.step)
-    );
-
-    for (let i of requiredStepIndexes) {
-        if (i >= activeStepIndex) {
-            index = i;
-            break;
-        }
-    }
-
-    return stepIndex > index;
-};
+import useHandleCheckDisable from './useHandleCheckDisable';
 
 const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }) => {
     const { setActiveStep } = useStepsFormDispatch();
-    const { steps, activeStep, fields } = useStepsFormState();
+    const { steps, activeStep, disabledStep } = useStepsFormState();
+
+    const handleCheckDisable = useHandleCheckDisable();
+
+    const checkDisableStep = useCallback(
+        (i) => {
+            const check = handleCheckDisable(i);
+
+            if (disabledStep.length !== 0) {
+                const index = disabledStep.reduce((prevValue, step) => {
+                    const firstStepIndex = steps.findIndex((s) => s === step);
+                    if (firstStepIndex < prevValue || prevValue === null) {
+                        return firstStepIndex;
+                    }
+                    return prevValue;
+                }, null);
+
+                return index <= i - 1 || check;
+            }
+
+            return check;
+        },
+        [disabledStep, steps, handleCheckDisable]
+    );
 
     const handleStep = (step) => () => {
         if (!clickableStep) return null;
-        const disabled = handleCheckDisable(step, steps, fields, activeStep);
+        const disabled = checkDisableStep(step);
 
         if (disabled) return null;
 
@@ -60,9 +62,7 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }
                             ...(clickableStep && {
                                 cursor: 'pointer',
                                 '&.Mui-disabled': {
-                                    cursor: handleCheckDisable(i, steps, fields, activeStep)
-                                        ? 'default'
-                                        : 'pointer',
+                                    cursor: checkDisableStep(i) ? 'default' : 'pointer',
                                 },
                             }),
                         }}
@@ -74,7 +74,7 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }
                                 size="small"
                                 variant="text"
                                 {...stepButtonProps}
-                                disabled={handleCheckDisable(i, steps, fields, activeStep)}
+                                disabled={checkDisableStep(i)}
                             >
                                 {label}
                             </Button>

@@ -47,15 +47,21 @@ export const stepsRules = [
         step: 'Second step',
         name: 'name3',
         label: 'Name3',
-        /* rules: {
-            required: 'This field is required',
-        }, */
+        rules: {
+            // required: 'This field is required',
+        },
     },
     {
         step: 'Second step',
         name: 'date',
         label: 'Date',
         input: 'date',
+        rules: {
+            validate: (d) => {
+                // if (d === '') return true;
+                return new Date(d) >= new Date() ? true : 'Error';
+            },
+        },
     },
     {
         step: 'Third step',

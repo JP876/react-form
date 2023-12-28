@@ -33,16 +33,18 @@ const SingleStepContainer = (props) => {
     );
 };
 
+const defaultStepOptions = {
+    clickableStep: false,
+    stepButtonProps: {},
+    stepLabelProps: {},
+};
+
 const StepsFormContainer = ({
     inputs,
     onSubmit,
     btnMsgs = { nextStep: 'Next', prevStep: 'Back', exit: 'Close' },
     exitBtnFunc,
-    stepOptions = {
-        clickableStep: false,
-        stepButtonProps: {},
-        stepLabelProps: {},
-    },
+    stepOptions = defaultStepOptions,
     saveOnBackBtn = false,
     mountOnlyActiveStep = true,
 }) => {
@@ -58,8 +60,8 @@ const StepsFormContainer = ({
     }
 
     return (
-        <Box className="stepForm-container">
-            <Steps {...stepOptions} saveOnBackBtn={saveOnBackBtn} />
+        <Box className="stepForm-container" id="step-form-container">
+            <Steps {...defaultStepOptions} {...stepOptions} saveOnBackBtn={saveOnBackBtn} />
 
             <Divider />
 
@@ -72,30 +74,32 @@ const StepsFormContainer = ({
             )}
             {!mountOnlyActiveStep &&
                 filteredInputs.map((input, index) => {
-                    const currentStep = input?.[0]?.step === steps[activeStep];
-                    const step = checkCurrentStep(currentStep);
+                    const currentStep = input?.[0]?.step === steps[activeStep] && input?.[0]?.step;
+                    const step = checkCurrentStep(input);
 
-                    if (currentStep && step !== null) {
-                        return (
-                            <Box
-                                key={input[0]?.step || `steps-form_step-${index}`}
-                                sx={{ display: currentStep ? 'block' : 'none' }}
-                            >
-                                {step === 'custom-step' ? (
-                                    <CustomStep input={input[0]} />
-                                ) : (
-                                    <StepForm
-                                        input={input}
-                                        btnMsgs={btnMsgs}
-                                        exitBtnFunc={exitBtnFunc}
-                                        saveOnBackBtn={saveOnBackBtn}
-                                    />
-                                )}
-                            </Box>
-                        );
+                    if (step === null) {
+                        return null;
                     }
 
-                    return null;
+                    return (
+                        <Box
+                            key={input[0]?.step || `steps-form_step-${index}`}
+                            sx={{ display: currentStep ? 'block' : 'none' }}
+                        >
+                            {step === 'custom-step' ? (
+                                <CustomStep input={input[0]} />
+                            ) : (
+                                <StepForm
+                                    input={input}
+                                    btnMsgs={btnMsgs}
+                                    exitBtnFunc={exitBtnFunc}
+                                    saveOnBackBtn={saveOnBackBtn}
+                                    clickableStep={stepOptions?.clickableStep}
+                                    currentStep={currentStep}
+                                />
+                            )}
+                        </Box>
+                    );
                 })}
         </Box>
     );
