@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useStepsFormDispatch } from '../context/StepsFormProvider';
+import { useStepFormDispatch } from '../context/StepFormProvider';
+import { useStepsFormState } from '../context/StepsFormProvider';
 
 const UpdateClickableStep = ({ currentStep }) => {
     const {
@@ -10,7 +11,9 @@ const UpdateClickableStep = ({ currentStep }) => {
         formState: { isSubmitted },
         getValues,
     } = useFormContext();
-    const { setDisabledStep, setValues } = useStepsFormDispatch();
+
+    const { setDisabledStep } = useStepFormDispatch();
+    const { activeStep } = useStepsFormState();
 
     useEffect(() => {
         const subscription = watch((value) => {
@@ -30,8 +33,11 @@ const UpdateClickableStep = ({ currentStep }) => {
     }, [watch, trigger, setDisabledStep, currentStep, isSubmitted]);
 
     useEffect(() => {
-        if (currentStep) setValues(getValues());
-    }, [getValues, setValues, currentStep]);
+        if (activeStep !== null && currentStep) {
+            const event = new CustomEvent('get-form-data', { detail: { data: getValues() } });
+            document.dispatchEvent(event);
+        }
+    }, [activeStep, getValues, currentStep]);
 
     return null;
 };

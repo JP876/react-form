@@ -2,10 +2,12 @@ import React, { useCallback } from 'react';
 import { Button, Step, StepLabel, Stepper } from '@mui/material';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider';
 import useHandleCheckDisable from './useHandleCheckDisable';
+import { useStepperState } from '../context/StepFormProvider';
 
 const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }) => {
     const { setActiveStep } = useStepsFormDispatch();
-    const { steps, activeStep, disabledStep } = useStepsFormState();
+    const { steps, activeStep } = useStepsFormState();
+    const { disabledStep } = useStepperState();
 
     const handleCheckDisable = useHandleCheckDisable();
 

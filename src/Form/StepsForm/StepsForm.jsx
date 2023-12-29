@@ -6,6 +6,7 @@ import Steps from './Steps.jsx';
 import StepForm from './StepForm.jsx';
 import CustomStep from './CustomStep.jsx';
 import StepsFormProvider, { useStepsFormState } from '../context/StepsFormProvider';
+import StepFormProvider from '../context/StepFormProvider.jsx';
 
 const checkCurrentStep = (input) => {
     if (Array.isArray(input) && input.length === 1 && !input?.[0]?.renderForm && input?.[0]?.Comp) {
@@ -108,7 +109,9 @@ const StepsFormContainer = ({
 export const StepsForm = (props) => {
     return (
         <StepsFormProvider {...props}>
-            <StepsFormContainer {...props} />
+            <StepFormProvider>
+                <StepsFormContainer {...props} />
+            </StepFormProvider>
         </StepsFormProvider>
     );
 };

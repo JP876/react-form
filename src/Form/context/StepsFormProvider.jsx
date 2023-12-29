@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+    useMemo,
+} from 'react';
 
 import addDefaultValues from '../helpers/addDefaultValues';
 
@@ -16,12 +24,9 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
         inputs.reduce((o, key) => ({ ...o, [key.name]: '' }), {})
     );
 
-    const [disabledStep, setDisabledStep] = useState([]);
-    const [values, setValues] = useState({});
-
     const justMounted = useRef(true);
 
-    const handleSubmit = () => onSubmit(finalData);
+    const handleSubmit = useCallback(() => onSubmit(finalData), [finalData, onSubmit]);
 
     const handleNext = (data) => {
         if (activeStep === steps.length - 1) {
@@ -36,13 +41,13 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
         }
     };
 
-    const handlePrevStep = (data) => {
+    const handlePrevStep = useCallback((data) => {
         if (data && data?._reactName !== 'onClick') {
             setFinalData((prev) => ({ ...prev, ...data }));
         }
 
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    }, []);
 
     useEffect(() => {
         if (fields.length !== 0) {
@@ -64,25 +69,18 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
             });
             setFields(addDefaultValues(inputsWithDefault, finalData));
         }
-    }, [inputs, finalData]);
+    }, [finalData, inputs]);
+
+    const stepsStateValue = useMemo(
+        () => ({ steps, activeStep, finalData, fields }),
+        [activeStep, fields, finalData, steps]
+    );
 
     return (
         <StepsFormDispatch.Provider
-            value={{
-                handleNext,
-                handlePrevStep,
-                handleSubmit,
-                setActiveStep,
-                setFinalData,
-                setDisabledStep,
-                setValues,
-            }}
+            value={{ handleNext, handlePrevStep, handleSubmit, setActiveStep, setFinalData }}
         >
-            <StepsFormState.Provider
-                value={{ steps, activeStep, finalData, fields, disabledStep, values }}
-            >
-                {children}
-            </StepsFormState.Provider>
+            <StepsFormState.Provider value={stepsStateValue}>{children}</StepsFormState.Provider>
         </StepsFormDispatch.Provider>
     );
 };

@@ -73,7 +73,7 @@ const UpdateForm = (props) => {
             )}
             {removeErrMsgs && <ClearErrMsgs />}
             {clearFields && <ClearFieldsAfterSubmit />}
-            {clickableStep && <UpdateClickableStep currentStep={currentStep} />}
+            {isStepForm && clickableStep && <UpdateClickableStep currentStep={currentStep} />}
             {typeof getFormMethods === 'function' && getFormMethods(methods)}
 
             <form onSubmit={handleSubmit(onSubmitFunc)}>

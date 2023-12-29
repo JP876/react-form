@@ -1,16 +1,18 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useStepsFormState } from '../context/StepsFormProvider';
 
 const useHandleCheckDisable = () => {
-    const { values, fields, steps, activeStep } = useStepsFormState();
+    const { fields, steps, activeStep } = useStepsFormState();
+
+    const [formValues, setFormValues] = useState({});
 
     const requiredStep = useMemo(() => {
         return fields.filter((i) => {
             let hasRequired = i.rules && i.rules.hasOwnProperty('required');
 
-            if (i?.rules?.hasOwnProperty('validate') && Object.keys(values).includes(i?.name)) {
-                const validateRes = i.rules.validate(values[i?.name]);
+            if (i?.rules?.hasOwnProperty('validate') && Object.keys(formValues).includes(i?.name)) {
+                const validateRes = i.rules.validate(formValues[i?.name]);
                 if (typeof validateRes === 'boolean' && validateRes) {
                     return false;
                 }
@@ -19,7 +21,18 @@ const useHandleCheckDisable = () => {
 
             return hasRequired && !i.defaultValue;
         });
-    }, [fields, values]);
+    }, [fields, formValues]);
+
+    useEffect(() => {
+        const handleUpdateFormData = (e) => {
+            setFormValues(e.detail.data);
+        };
+
+        document.addEventListener('get-form-data', handleUpdateFormData);
+        return () => {
+            document.removeEventListener('get-form-data', handleUpdateFormData);
+        };
+    }, []);
 
     return useCallback(
         (stepIndex) => {

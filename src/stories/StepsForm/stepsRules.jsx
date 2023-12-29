@@ -48,7 +48,7 @@ export const stepsRules = [
         name: 'name3',
         label: 'Name3',
         rules: {
-            // required: 'This field is required',
+            required: 'This field is required',
         },
     },
     {

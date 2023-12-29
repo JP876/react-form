@@ -8,9 +8,8 @@ const BackStepBtn = ({ saveOnBackBtn, btnProps, children }) => {
     const { setFinalData, setActiveStep } = useStepsFormDispatch();
 
     const handleValues = () => {
-        if (saveOnBackBtn) {
-            setFinalData((prev) => ({ ...prev, ...watch() }));
-        }
+        setFinalData((prev) => ({ ...prev, ...watch() }));
+
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
