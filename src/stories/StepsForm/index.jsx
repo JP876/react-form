@@ -19,7 +19,7 @@ const StepsFormExample = () => {
                     onSubmit={handleSubmit}
                     stepOptions={stepOptions}
                     // saveOnBackBtn
-                    mountOnlyActiveStep={false}
+                    // mountOnlyActiveStep={false}
                     // btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}
                     btnMsgs={[
                         // { step: 'Third step2', nextStep: 'Add' },

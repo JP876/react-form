@@ -5,7 +5,7 @@ import UpdateForm from '../UpdateForm.jsx';
 import BackStepBtn from './BackStepBtn.jsx';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
-const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn, clickableStep, currentStep }) => {
+const StepForm = ({ input, btnMsgs, exitBtnFunc, clickableStep, currentStep }) => {
     const { handleNext } = useStepsFormDispatch();
     const { steps, activeStep } = useStepsFormState();
 
@@ -42,7 +42,6 @@ const StepForm = ({ input, btnMsgs, exitBtnFunc, saveOnBackBtn, clickableStep, c
             )}
 
             <BackStepBtn
-                saveOnBackBtn={saveOnBackBtn}
                 btnProps={{
                     id: 'steps-form-back-btn',
                     disabled: activeStep === 0,

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useStepsFormState } from '../context/StepsFormProvider';
 
 const useHandleCheckDisable = () => {
-    const { fields, steps, activeStep } = useStepsFormState();
+    const { fields, steps, activeStep, finalData } = useStepsFormState();
 
     const [formValues, setFormValues] = useState({});
 
@@ -19,18 +19,18 @@ const useHandleCheckDisable = () => {
                 hasRequired = true;
             }
 
-            return hasRequired && !i.defaultValue;
+            return hasRequired && !{ ...finalData, ...formValues }[i?.name];
         });
-    }, [fields, formValues]);
+    }, [fields, formValues, finalData]);
 
     useEffect(() => {
         const handleUpdateFormData = (e) => {
             setFormValues(e.detail.data);
         };
 
-        document.addEventListener('get-form-data', handleUpdateFormData);
+        document.addEventListener('get-single-step-form-data', handleUpdateFormData);
         return () => {
-            document.removeEventListener('get-form-data', handleUpdateFormData);
+            document.removeEventListener('get-single-step-form-data', handleUpdateFormData);
         };
     }, []);
 

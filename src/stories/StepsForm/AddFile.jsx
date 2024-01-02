@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Button,
-    Divider,
-    List,
-    ListItem,
-    ListItemText,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Button, Divider, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
 
 const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
     const [selectedFile, setSelectedFile] = useState(finalData.selectedFile || []);
@@ -21,19 +13,14 @@ const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
 
     return (
         <>
-            <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                sx={{ m: 4 }}
-            >
+            <Stack direction="row" justifyContent="center" alignItems="center" sx={{ m: 4 }}>
                 <Button variant="outlined" component="label">
                     <Typography variant="body1">Add file</Typography>
                     <input onChange={handleChange} type="file" hidden multiple />
                 </Button>
             </Stack>
             <Divider />
-            {selectedFile.length !== 0 && (
+            {Array.isArray(selectedFile) && selectedFile.length !== 0 && (
                 <List>
                     {selectedFile.map((file, i) => (
                         <ListItem

@@ -58,7 +58,7 @@ export const stepsRules = [
         input: 'date',
         rules: {
             validate: (d) => {
-                // if (d === '') return true;
+                // if (d === '' || d === null) return true;
                 return new Date(d) >= new Date() ? true : 'Error';
             },
         },

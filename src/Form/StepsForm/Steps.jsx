@@ -4,7 +4,7 @@ import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormPro
 import useHandleCheckDisable from './useHandleCheckDisable';
 import { useStepperState } from '../context/StepFormProvider';
 
-const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }) => {
+const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
     const { setActiveStep } = useStepsFormDispatch();
     const { steps, activeStep } = useStepsFormState();
     const { disabledStep } = useStepperState();
@@ -50,7 +50,7 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, saveOnBackBtn }
                 nextBtn?.type === 'submit' ? setActiveStep(step - 1) : setActiveStep(step);
             }
         } else {
-            if (backBtn && saveOnBackBtn) backBtn.click();
+            if (backBtn) backBtn.click();
             setActiveStep(step);
         }
     };

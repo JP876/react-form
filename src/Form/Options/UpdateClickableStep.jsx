@@ -34,7 +34,9 @@ const UpdateClickableStep = ({ currentStep }) => {
 
     useEffect(() => {
         if (activeStep !== null && currentStep) {
-            const event = new CustomEvent('get-form-data', { detail: { data: getValues() } });
+            const event = new CustomEvent('get-single-step-form-data', {
+                detail: { data: getValues() },
+            });
             document.dispatchEvent(event);
         }
     }, [activeStep, getValues, currentStep]);
