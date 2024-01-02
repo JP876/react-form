@@ -17,6 +17,7 @@ export default {
             exports: 'named',
         },
     ],
+    external: [/node_modules/],
     plugins: [
         peerDepsExternal(),
         resolve(),
