@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { useStepsFormDispatch } from '../context/StepsFormProvider';
+
+import { useStepsFormDispatch } from '../context/StepsFormProvider.jsx';
 
 const BackStepBtn = ({ btnProps, children }) => {
     const { watch } = useFormContext();

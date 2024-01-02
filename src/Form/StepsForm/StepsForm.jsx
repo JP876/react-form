@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import Steps from './Steps.jsx';
 import StepForm from './StepForm.jsx';
 import CustomStep from './CustomStep.jsx';
-import StepsFormProvider, { useStepsFormState } from '../context/StepsFormProvider';
+import StepsFormProvider, { useStepsFormState } from '../context/StepsFormProvider.jsx';
 import StepFormProvider from '../context/StepFormProvider.jsx';
 
 const checkCurrentStep = (input) => {

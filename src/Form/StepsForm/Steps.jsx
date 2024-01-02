@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { Button, Step, StepLabel, Stepper } from '@mui/material';
-import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider';
-import useHandleCheckDisable from './useHandleCheckDisable';
-import { useStepperState } from '../context/StepFormProvider';
+
+import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
+import useHandleCheckDisable from './useHandleCheckDisable.jsx';
+import { useStepperState } from '../context/StepFormProvider.jsx';
 
 const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
     const { setActiveStep } = useStepsFormDispatch();

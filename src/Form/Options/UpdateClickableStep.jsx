@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useStepFormDispatch } from '../context/StepFormProvider';
-import { useStepsFormState } from '../context/StepsFormProvider';
+import { useStepFormDispatch } from '../context/StepFormProvider.jsx';
+import { useStepsFormState } from '../context/StepsFormProvider.jsx';
 
 const UpdateClickableStep = ({ currentStep }) => {
     const {

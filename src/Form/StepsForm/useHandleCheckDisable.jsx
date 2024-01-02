@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useStepsFormState } from '../context/StepsFormProvider';
+import { useStepsFormState } from '../context/StepsFormProvider.jsx';
 
 const useHandleCheckDisable = () => {
     const { fields, steps, activeStep, finalData } = useStepsFormState();
