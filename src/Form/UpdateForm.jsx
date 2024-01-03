@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Divider } from '@mui/material';
+import { Box, Button, Divider } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import InputContainer from './InputContainer.jsx';
@@ -8,7 +8,12 @@ import ClearErrMsgs from './Options/ClearErrMsgs.jsx';
 import ClearFieldsAfterSubmit from './Options/ClearFieldsAfterSubmit.jsx';
 import UpdateClickableStep from './Options/UpdateClickableStep.jsx';
 
-import './styles/style.css';
+const btnContainer = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    margin: '1rem',
+};
 
 const UpdateForm = (props) => {
     const {
@@ -81,7 +86,7 @@ const UpdateForm = (props) => {
                 {!noBtn && (
                     <>
                         <Divider />
-                        <div className="updateForm__btnContainer">
+                        <Box sx={btnContainer} className="updateForm__btnContainer">
                             {React.Children.map(children, (child) =>
                                 React.cloneElement(child, {
                                     options: {
@@ -102,7 +107,7 @@ const UpdateForm = (props) => {
                                     {btnMessage}
                                 </Button>
                             )}
-                        </div>
+                        </Box>
                     </>
                 )}
             </form>

@@ -3,9 +3,16 @@ import { Box } from '@mui/material';
 
 import FormInput from './FormInput.jsx';
 
+const updateFormContaienr = {
+    display: 'grid',
+    gap: '1rem',
+    gridTemplateColumns: '1fr',
+    margin: '1rem',
+};
+
 const InputContainer = ({ updateInputs, control, errors }) => {
     return (
-        <Box className="updateForm updateForm__container-1c">
+        <Box sx={updateFormContaienr} className="updateForm updateForm__container-1c">
             {updateInputs.map((el, i) => {
                 const { Comp } = el;
 

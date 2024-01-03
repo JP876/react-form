@@ -1,12 +1,13 @@
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
+// import postcss from 'rollup-plugin-postcss';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import analyze from 'rollup-plugin-analyzer';
 import terser from '@rollup/plugin-terser';
 
+/* eslint-disable import/no-anonymous-default-export */
 export default {
     input: './src/index.js',
     output: [
@@ -17,16 +18,12 @@ export default {
             exports: 'named',
         },
     ],
-    external: (id) => {
-        if (/style-inject/.test(id)) return false;
-        if (/node_modules/.test(id)) return true;
-        return false;
-    },
+    external: [/node_modules/],
     plugins: [
         peerDepsExternal(),
         resolve(),
         commonjs(),
-        postcss({ plugins: [], minimize: true }),
+        // postcss({ plugins: [], minimize: true }),
         babel({
             exclude: 'node_modules/**',
             presets: ['@babel/preset-react'],
