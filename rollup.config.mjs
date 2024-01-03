@@ -10,19 +10,23 @@ import terser from '@rollup/plugin-terser';
 export default {
     input: './src/index.js',
     output: [
-        { file: 'dist/main.js', format: 'cjs' },
+        // { file: 'dist/main.js', format: 'cjs' },
         {
             file: 'dist/index.es.js',
             format: 'es',
             exports: 'named',
         },
     ],
-    external: [/node_modules/],
+    external: (id) => {
+        if (/style-inject/.test(id)) return false;
+        if (/node_modules/.test(id)) return true;
+        return false;
+    },
     plugins: [
         peerDepsExternal(),
         resolve(),
-        commonjs(),
-        postcss({ plugins: [], minimize: true }),
+        // commonjs(),
+        postcss({ plugins: [], minimize: true, modules: true }),
         babel({
             exclude: 'node_modules/**',
             presets: ['@babel/preset-react'],
