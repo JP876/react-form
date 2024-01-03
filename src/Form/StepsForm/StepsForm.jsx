@@ -87,7 +87,7 @@ const StepsFormContainer = ({
                         sx={{ display: currentStep ? 'block' : 'none' }}
                     >
                         {step === 'custom-step' ? (
-                            <CustomStep input={input[0]} />
+                            <CustomStep input={input[0]} currentStep={currentStep} />
                         ) : (
                             <StepForm
                                 input={input}

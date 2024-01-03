@@ -2,9 +2,9 @@ import React from 'react';
 
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
-const CustomStep = ({ input: { Comp } }) => {
+const CustomStep = ({ input: { Comp }, currentStep }) => {
     const { handleNext, handlePrevStep, handleSubmit } = useStepsFormDispatch();
-    const { finalData } = useStepsFormState();
+    const { finalData, activeStep } = useStepsFormState();
 
     if (!Comp) return null;
 
@@ -15,6 +15,8 @@ const CustomStep = ({ input: { Comp } }) => {
                 handleSubmit,
                 handlePrevStep,
                 handleNext,
+                currentStep,
+                activeStep,
             }}
         />
     );
