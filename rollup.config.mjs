@@ -26,7 +26,7 @@ export default {
         peerDepsExternal(),
         resolve(),
         // commonjs(),
-        postcss({ plugins: [], minimize: true, modules: true }),
+        postcss({ plugins: [], minimize: true }),
         babel({
             exclude: 'node_modules/**',
             presets: ['@babel/preset-react'],
