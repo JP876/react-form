@@ -25,7 +25,7 @@ export default {
     plugins: [
         peerDepsExternal(),
         resolve(),
-        // commonjs(),
+        commonjs(),
         postcss({ plugins: [], minimize: true }),
         babel({
             exclude: 'node_modules/**',
