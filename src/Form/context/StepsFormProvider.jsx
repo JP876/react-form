@@ -30,20 +30,22 @@ const StepsFormProvider = ({ inputs, onSubmit, children }) => {
             setFinalData((prev) => ({ ...prev, ...data }));
             setTimeout(() => onSubmit({ ...finalData, ...data }), 0);
         } else {
-            if (data && data?._reactName !== 'onClick') {
-                setFinalData((prev) => ({ ...prev, ...data }));
-            }
-
+            setFinalData((prev) => ({ ...prev, ...data }));
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
     };
 
     const handlePrevStep = useCallback((data) => {
-        if (data && data?._reactName !== 'onClick') {
-            setFinalData((prev) => ({ ...prev, ...data }));
+        let formData = data;
+
+        if (data && data?._reactName === 'onClick') {
+            formData = {};
         }
 
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        const event = new CustomEvent('handle-step-change', {
+            detail: { step: 'previous', data: formData },
+        });
+        document.dispatchEvent(event);
     }, []);
 
     useEffect(() => {

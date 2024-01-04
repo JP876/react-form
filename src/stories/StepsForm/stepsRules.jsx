@@ -47,9 +47,9 @@ export const stepsRules = [
         step: 'Second step',
         name: 'name3',
         label: 'Name3',
-        rules: {
+        /* rules: {
             required: 'This field is required',
-        },
+        }, */
     },
     {
         step: 'Second step',
@@ -57,8 +57,9 @@ export const stepsRules = [
         label: 'Date',
         input: 'date',
         rules: {
+            // required: 'This field is required',
             validate: (d) => {
-                // if (d === '' || d === null) return true;
+                if (d === '' || d === null) return true;
                 return new Date(d) >= new Date() ? true : 'Error';
             },
         },
@@ -68,9 +69,9 @@ export const stepsRules = [
         name: 'date1',
         label: 'Date',
         input: 'date',
-        /* rules: {
-            required: 'This field is required',
-        }, */
+        // rules: {
+        //     required: 'This field is required',
+        // },
     },
     {
         step: 'Third step1',
@@ -93,7 +94,9 @@ export const stepsRules = [
         name: 'selectedFile',
         Comp: AddFile,
         rules: {
-            required: 'This field is required',
+            validate: (d) => {
+                return d === '' || (Array.isArray(d) && d.length < 1) ? 'Error' : true;
+            },
         },
     },
     {

@@ -7,6 +7,7 @@ import DisableSubmitBtn from './Options/DisableSubmitBtn.jsx';
 import ClearErrMsgs from './Options/ClearErrMsgs.jsx';
 import ClearFieldsAfterSubmit from './Options/ClearFieldsAfterSubmit.jsx';
 import UpdateClickableStep from './Options/UpdateClickableStep.jsx';
+import { useStepFormDispatch } from './context/StepFormProvider.jsx';
 
 const btnContainer = {
     display: 'flex',
@@ -48,6 +49,7 @@ const UpdateForm = (props) => {
 
     const onSubmitFunc = (data, e) => {
         // if checkbox is not clicked once, set value to false instead of ''
+
         const input = inputs
             .filter((u) => {
                 return u.input === 'checkbox' && data[u.name] === '';

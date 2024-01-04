@@ -10,16 +10,17 @@ const useHandleCheckDisable = () => {
     const requiredStep = useMemo(() => {
         return fields.filter((i) => {
             let hasRequired = i.rules && i.rules.hasOwnProperty('required');
+            const formData = { ...finalData, ...formValues };
 
-            if (i?.rules?.hasOwnProperty('validate') && Object.keys(formValues).includes(i?.name)) {
-                const validateRes = i.rules.validate(formValues[i?.name]);
+            if (i?.rules?.hasOwnProperty('validate') && Object.keys(formData).includes(i?.name)) {
+                const validateRes = i.rules.validate(formData[i?.name]);
                 if (typeof validateRes === 'boolean' && validateRes) {
                     return false;
                 }
-                hasRequired = true;
+                return true;
             }
 
-            return hasRequired && !{ ...finalData, ...formValues }[i?.name];
+            return hasRequired && !formData[i?.name];
         });
     }, [fields, formValues, finalData]);
 

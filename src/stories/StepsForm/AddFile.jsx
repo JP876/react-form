@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
 
-const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
+import useStepButton from '../../Form/StepsForm/useStepButton';
+
+const AddFile = ({ options: { finalData, error } }) => {
     const [selectedFile, setSelectedFile] = useState(finalData.selectedFile || []);
+
+    const backBtnProps = useStepButton('back', selectedFile);
+    const nextBntProps = useStepButton('next', selectedFile);
 
     const handleChange = ({ target }) =>
         setSelectedFile((prevFiles) => [...prevFiles, ...target.files]);
@@ -37,20 +42,15 @@ const AddFile = ({ options: { handlePrevStep, handleNext, finalData } }) => {
                     ))}
                 </List>
             )}
+            <Typography variant="body2" color="error">
+                {error || ''}
+            </Typography>
             <Stack direction="row" justifyContent="space-around" sx={{ m: 2 }}>
-                <Button
-                    color="error"
-                    onClick={() => handlePrevStep({ selectedFile })}
-                    variant="outlined"
-                >
+                <Button color="error" variant="outlined" {...backBtnProps}>
                     Back
                 </Button>
-                <Button
-                    //disabled={selectedFile.length === 0}
-                    id="step-form-next-btn"
-                    onClick={() => handleNext({ selectedFile })}
-                    variant="contained"
-                >
+
+                <Button {...nextBntProps} variant="contained">
                     Next
                 </Button>
             </Stack>

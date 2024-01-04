@@ -62,7 +62,7 @@ const StepsFormContainer = ({
 
     return (
         <Box className="stepForm-container" id="step-form-container">
-            <Steps {...defaultStepOptions} {...stepOptions} />
+            <Steps {...defaultStepOptions} {...stepOptions} filteredInputs={filteredInputs} />
 
             <Divider />
 

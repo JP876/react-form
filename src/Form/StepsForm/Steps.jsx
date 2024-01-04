@@ -1,12 +1,27 @@
 import React, { useCallback } from 'react';
 import { Button, Step, StepLabel, Stepper } from '@mui/material';
 
-import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
+import { useStepsFormState } from '../context/StepsFormProvider.jsx';
 import useHandleCheckDisable from './useHandleCheckDisable.jsx';
 import { useStepperState } from '../context/StepFormProvider.jsx';
 
-const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
-    const { setActiveStep } = useStepsFormDispatch();
+const isVisible = (el) => {
+    if (!el) return null;
+    const style = window.getComputedStyle(el);
+    if (!style) return null;
+
+    return (
+        style.width !== '0' &&
+        style.height !== '0' &&
+        style.opacity !== '0' &&
+        style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        el?.clientHeight !== 0 &&
+        el?.clientWidth !== 0
+    );
+};
+
+const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, filteredInputs }) => {
     const { steps, activeStep } = useStepsFormState();
     const { disabledStep } = useStepperState();
 
@@ -39,20 +54,14 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
 
         if (disabled) return null;
 
-        let nextBtn = document.querySelectorAll('#step-form-next-btn');
-        let backBtn = document.querySelectorAll('#steps-form-back-btn');
+        const backBtns = document.querySelectorAll('#step-form-validate-back-btn');
+        const backBtn = [...backBtns].find((el) => isVisible(el));
 
-        nextBtn.length > 1 ? (nextBtn = nextBtn[activeStep]) : (nextBtn = nextBtn?.[0]);
-        backBtn.length > 1 ? (backBtn = backBtn[activeStep]) : (backBtn = backBtn?.[0]);
-
-        if (step > activeStep) {
-            if (nextBtn) {
-                nextBtn.click();
-                nextBtn?.type === 'submit' ? setActiveStep(step - 1) : setActiveStep(step);
-            }
+        if (!backBtn) {
+            const event = new CustomEvent('handle-step-change', { detail: { step, data: {} } });
+            document.dispatchEvent(event);
         } else {
-            if (backBtn) backBtn.click();
-            setActiveStep(step);
+            backBtn.click();
         }
     };
 

@@ -2,11 +2,10 @@ import React, { useMemo } from 'react';
 import { Button } from '@mui/material';
 
 import UpdateForm from '../UpdateForm.jsx';
-import BackStepBtn from './BackStepBtn.jsx';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
 const StepForm = ({ input, btnMsgs, exitBtnFunc, clickableStep, currentStep }) => {
-    const { handleNext } = useStepsFormDispatch();
+    const { handleNext, handlePrevStep } = useStepsFormDispatch();
     const { steps, activeStep } = useStepsFormState();
 
     const buttonMessages = useMemo(() => {
@@ -41,14 +40,14 @@ const StepForm = ({ input, btnMsgs, exitBtnFunc, clickableStep, currentStep }) =
                 <></>
             )}
 
-            <BackStepBtn
-                btnProps={{
-                    id: 'steps-form-back-btn',
-                    disabled: activeStep === 0,
-                }}
+            <Button
+                onClick={handlePrevStep}
+                color="error"
+                variant="outlined"
+                disabled={activeStep === 0}
             >
                 {buttonMessages?.prevStep || 'Back'}
-            </BackStepBtn>
+            </Button>
 
             <Button id="step-form-next-btn" type="submit" variant="contained" color="primary">
                 {buttonMessages?.nextStep || 'Next'}
