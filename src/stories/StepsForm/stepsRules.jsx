@@ -47,9 +47,9 @@ export const stepsRules = [
         step: 'Second step',
         name: 'name3',
         label: 'Name3',
-        /* rules: {
+        rules: {
             required: 'This field is required',
-        }, */
+        },
     },
     {
         step: 'Second step',
@@ -93,11 +93,11 @@ export const stepsRules = [
         step: 'Fourth step',
         name: 'selectedFile',
         Comp: AddFile,
-        rules: {
+        /* rules: {
             validate: (d) => {
                 return d === '' || (Array.isArray(d) && d.length < 1) ? 'Error' : true;
             },
-        },
+        }, */
     },
     {
         step: 'Final step',

@@ -4,26 +4,11 @@ import { Button, Step, StepLabel, Stepper } from '@mui/material';
 import { useStepsFormState } from '../context/StepsFormProvider.jsx';
 import useHandleCheckDisable from './useHandleCheckDisable.jsx';
 import { useStepperState } from '../context/StepFormProvider.jsx';
+import isElementVisible from '../helpers/isElementVisible.js';
 
-const isVisible = (el) => {
-    if (!el) return null;
-    const style = window.getComputedStyle(el);
-    if (!style) return null;
-
-    return (
-        style.width !== '0' &&
-        style.height !== '0' &&
-        style.opacity !== '0' &&
-        style.display !== 'none' &&
-        style.visibility !== 'hidden' &&
-        el?.clientHeight !== 0 &&
-        el?.clientWidth !== 0
-    );
-};
-
-const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, filteredInputs }) => {
+const Steps = ({ stepLabelProps, clickableStep, stepButtonProps }) => {
     const { steps, activeStep } = useStepsFormState();
-    const { disabledStep } = useStepperState();
+    const { disabledStep, stepRef } = useStepperState();
 
     const handleCheckDisable = useHandleCheckDisable();
 
@@ -53,9 +38,10 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, filteredInputs 
         const disabled = checkDisableStep(step);
 
         if (disabled) return null;
+        stepRef.current = step;
 
         const backBtns = document.querySelectorAll('#step-form-validate-back-btn');
-        const backBtn = [...backBtns].find((el) => isVisible(el));
+        const backBtn = [...backBtns].find((el) => isElementVisible(el));
 
         if (!backBtn) {
             const event = new CustomEvent('handle-step-change', { detail: { step, data: {} } });
@@ -63,39 +49,43 @@ const Steps = ({ stepLabelProps, clickableStep, stepButtonProps, filteredInputs 
         } else {
             backBtn.click();
         }
+        stepRef.current = null;
     };
 
     return (
         <Stepper activeStep={activeStep} alternativeLabel sx={{ py: 2 }}>
-            {steps?.map((label, i) => (
-                <Step key={label}>
-                    <StepLabel
-                        sx={{
-                            ...(clickableStep && {
-                                cursor: 'pointer',
-                                '&.Mui-disabled': {
-                                    cursor: checkDisableStep(i) ? 'default' : 'pointer',
-                                },
-                            }),
-                        }}
-                        {...stepLabelProps}
-                        onClick={handleStep(i)}
-                    >
-                        {clickableStep ? (
-                            <Button
-                                size="small"
-                                variant="text"
-                                {...stepButtonProps}
-                                disabled={checkDisableStep(i)}
-                            >
-                                {label}
-                            </Button>
-                        ) : (
-                            label
-                        )}
-                    </StepLabel>
-                </Step>
-            ))}
+            {steps?.map((label, i) => {
+                const check = checkDisableStep(i);
+                return (
+                    <Step key={label}>
+                        <StepLabel
+                            sx={{
+                                ...(clickableStep && {
+                                    cursor: 'pointer',
+                                    '&.Mui-disabled': {
+                                        cursor: check ? 'default' : 'pointer',
+                                    },
+                                }),
+                            }}
+                            {...stepLabelProps}
+                            onClick={handleStep(i)}
+                        >
+                            {clickableStep ? (
+                                <Button
+                                    size="small"
+                                    variant="text"
+                                    {...stepButtonProps}
+                                    disabled={check}
+                                >
+                                    {label}
+                                </Button>
+                            ) : (
+                                label
+                            )}
+                        </StepLabel>
+                    </Step>
+                );
+            })}
         </Stepper>
     );
 };

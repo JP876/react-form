@@ -19,6 +19,13 @@ export default {
         },
     ],
     external: [/node_modules/],
+    /* For postcss: https://github.com/egoist/rollup-plugin-postcss/issues/381
+    external: (id) => {
+        if (/style-inject/.test(id)) return false;
+        if (/node_modules/.test(id)) return true;
+        return false;
+    },
+    */
     plugins: [
         peerDepsExternal(),
         resolve(),

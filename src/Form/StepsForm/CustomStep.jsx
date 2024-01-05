@@ -1,26 +1,66 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
+import { useStepFormDispatch, useStepperState } from '../context/StepFormProvider.jsx';
 
 const CustomStepInput = createContext();
 export const useCustomStepInput = () => useContext(CustomStepInput);
 
-const CustomStep = ({ input, currentStep }) => {
-    const { Comp } = input;
-    const [error, setError] = useState(null);
+const CustomStepContext = createContext();
+export const useCustomStepContext = () => useContext(CustomStepContext);
 
-    const { handleNext, handlePrevStep, handleSubmit, setActiveStep, setFinalData } =
-        useStepsFormDispatch();
-    const { finalData, activeStep } = useStepsFormState();
+const CustomStepContainer = ({ input, currentStep, children }) => {
+    const [error, setError] = useState(false);
+
+    const { setActiveStep, setFinalData } = useStepsFormDispatch();
+    const { stepRef } = useStepperState();
+    const { setDisabledStep } = useStepFormDispatch();
+
+    const clearError = useCallback(() => {
+        setError(false);
+    }, []);
+
+    const validateStep = useCallback(
+        (stepData) => {
+            const { rules, step } = input;
+
+            if (rules?.hasOwnProperty('validate')) {
+                const validateRes = rules.validate(stepData);
+                setError(validateRes);
+
+                if (!(typeof validateRes === 'boolean' && validateRes)) {
+                    setDisabledStep([step]);
+                    return false;
+                }
+
+                setDisabledStep([]);
+                return validateRes;
+            }
+
+            return true;
+        },
+        [input, setDisabledStep]
+    );
 
     const stepInputValue = useMemo(() => {
-        return { rules: input?.rules, name: input?.name, step: input?.step, setError };
-    }, [input?.rules, input?.name, input?.step]);
+        return {
+            rules: input?.rules,
+            name: input?.name,
+            step: input?.step,
+            setError,
+            validateStep,
+        };
+    }, [input?.rules, input?.name, input?.step, validateStep]);
+
+    const stepContextValue = useMemo(() => {
+        return { error, clearError, validateStep };
+    }, [clearError, error, validateStep]);
 
     useEffect(() => {
         const handleChangeStep = (e) => {
             if (currentStep) {
-                const { step, data } = e.detail;
+                let { step, data } = e.detail;
+                if (stepRef.current !== null) step = stepRef.current;
 
                 setFinalData((prevState) => ({ ...prevState, ...data }));
                 setActiveStep((prevStep) => {
@@ -40,24 +80,36 @@ const CustomStep = ({ input, currentStep }) => {
         return () => {
             document.removeEventListener('handle-step-change', handleChangeStep);
         };
-    }, [currentStep, setActiveStep, setFinalData]);
+    }, [currentStep, setActiveStep, setFinalData, stepRef]);
+
+    return (
+        <CustomStepInput.Provider value={stepInputValue}>
+            <CustomStepContext.Provider value={stepContextValue}>
+                {children}
+            </CustomStepContext.Provider>
+        </CustomStepInput.Provider>
+    );
+};
+
+const CustomStep = ({ input, currentStep }) => {
+    const { Comp } = input;
+
+    const { handleNext, handlePrevStep, handleSubmit } = useStepsFormDispatch();
+    const { finalData } = useStepsFormState();
 
     if (!Comp) return null;
 
     return (
-        <CustomStepInput.Provider value={stepInputValue}>
+        <CustomStepContainer input={input} currentStep={currentStep}>
             <Comp
                 options={{
                     finalData,
                     handleSubmit,
                     handlePrevStep,
                     handleNext,
-                    currentStep,
-                    activeStep,
-                    error,
                 }}
             />
-        </CustomStepInput.Provider>
+        </CustomStepContainer>
     );
 };
 

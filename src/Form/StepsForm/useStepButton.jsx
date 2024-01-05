@@ -1,30 +1,27 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { useStepsFormDispatch } from '../context/StepsFormProvider';
-import { useCustomStepInput } from './CustomStep';
-import { useStepFormDispatch } from '../context/StepFormProvider';
+import { useStepsFormDispatch } from '../context/StepsFormProvider.jsx';
+import { useCustomStepInput } from './CustomStep.jsx';
 
 const useStepButton = (variant, stepData) => {
     const { handlePrevStep, handleNext } = useStepsFormDispatch();
-    const { rules, name, step, setError } = useCustomStepInput();
-    const { setDisabledStep } = useStepFormDispatch();
+    const { name, validateStep } = useCustomStepInput();
 
-    const handleClick = (e) => {
-        if (rules?.hasOwnProperty('validate')) {
-            const validateRes = rules.validate(stepData);
-            setError(validateRes);
-
-            if (!(typeof validateRes === 'boolean' && validateRes)) {
-                setDisabledStep([step]);
-                return null;
+    const handleClick = useCallback(
+        (e) => {
+            if (validateStep(stepData)) {
+                variant === 'back'
+                    ? handlePrevStep({ [name]: stepData })
+                    : handleNext({ [name]: stepData });
             }
-            setDisabledStep([]);
-        }
+        },
+        [handleNext, handlePrevStep, name, stepData, validateStep, variant]
+    );
 
-        variant === 'back'
-            ? handlePrevStep({ [name]: stepData })
-            : handleNext({ [name]: stepData });
-    };
+    const returnValue = useMemo(
+        () => ({ id: `step-form-validate-${variant}-btn`, onClick: handleClick }),
+        [handleClick, variant]
+    );
 
     if (!variant || (variant !== 'back' && variant !== 'next')) {
         console.error('Please provide first parametar, options are: back or next');
@@ -36,7 +33,7 @@ const useStepButton = (variant, stepData) => {
         return null;
     }
 
-    return { id: `step-form-validate-${variant}-btn`, onClick: handleClick };
+    return returnValue;
 };
 
 export default useStepButton;

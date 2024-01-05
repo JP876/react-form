@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Checkbox, FormControlLabel, FormHelperText, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -11,6 +11,11 @@ const CheckboxRender = ({
     inputProps,
     methods,
 }) => {
+    useEffect(() => {
+        if (typeof field?.value !== 'boolean') field?.onChange(false);
+        /* eslint-disable react-hooks/exhaustive-deps  */
+    }, [field?.value]);
+
     return (
         <Stack id="updateForm_checkbox" direction="row" justifyContent="center" mt={0.4}>
             <Box>

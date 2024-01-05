@@ -17,7 +17,7 @@ const checkCurrentStep = (input) => {
     return null;
 };
 
-const SingleStepContainer = (props) => {
+/* const SingleStepContainer = (props) => {
     const { steps, activeStep, fields } = useStepsFormState();
 
     const currentStep = useMemo(() => {
@@ -32,7 +32,7 @@ const SingleStepContainer = (props) => {
     ) : (
         <StepForm input={currentStep} {...props} />
     );
-};
+}; */
 
 const defaultStepOptions = {
     clickableStep: false,
@@ -62,7 +62,7 @@ const StepsFormContainer = ({
 
     return (
         <Box className="stepForm-container" id="step-form-container">
-            <Steps {...defaultStepOptions} {...stepOptions} filteredInputs={filteredInputs} />
+            <Steps {...defaultStepOptions} {...stepOptions} />
 
             <Divider />
 

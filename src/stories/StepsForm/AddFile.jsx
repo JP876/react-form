@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Divider, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
 
-import useStepButton from '../../Form/StepsForm/useStepButton';
+import useStepButton from '../../Form/StepsForm/useStepButton.jsx';
+import { useCustomStepContext } from '../../Form/StepsForm/CustomStep.jsx';
 
-const AddFile = ({ options: { finalData, error } }) => {
+const AddFile = ({ options: { finalData } }) => {
     const [selectedFile, setSelectedFile] = useState(finalData.selectedFile || []);
+    const justMounted = useRef(true);
 
     const backBtnProps = useStepButton('back', selectedFile);
     const nextBntProps = useStepButton('next', selectedFile);
+
+    const { error, validateStep } = useCustomStepContext();
 
     const handleChange = ({ target }) =>
         setSelectedFile((prevFiles) => [...prevFiles, ...target.files]);
@@ -15,6 +19,19 @@ const AddFile = ({ options: { finalData, error } }) => {
     const handleDelete = (index) => {
         setSelectedFile((prevFiles) => prevFiles.filter((file, i) => i !== index));
     };
+
+    /* useEffect(() => {
+        if (error) {
+            setTimeout(() => clearError(), 4_000);
+        }
+    }, [clearError, error]); */
+
+    useEffect(() => {
+        if (!justMounted.current) {
+            validateStep(selectedFile);
+        }
+        justMounted.current = false;
+    }, [selectedFile, validateStep]);
 
     return (
         <>
@@ -42,9 +59,11 @@ const AddFile = ({ options: { finalData, error } }) => {
                     ))}
                 </List>
             )}
-            <Typography variant="body2" color="error">
-                {error || ''}
-            </Typography>
+            {typeof error === 'string' ? (
+                <Typography variant="body2" color="error">
+                    {error}
+                </Typography>
+            ) : null}
             <Stack direction="row" justifyContent="space-around" sx={{ m: 2 }}>
                 <Button color="error" variant="outlined" {...backBtnProps}>
                     Back

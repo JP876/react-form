@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useRef, useState } from 'react';
 
 const StepFormState = createContext();
 export const useStepFormState = () => useContext(StepFormState);
@@ -13,9 +13,11 @@ const StepFormProvider = ({ children }) => {
     const [disabledStep, setDisabledStep] = useState([]);
     const [values, setValues] = useState({});
 
+    const stepRef = useRef(null);
+
     const dispatchValue = useMemo(() => ({ setDisabledStep, setValues }), []);
     const stepValue = useMemo(() => ({ values }), [values]);
-    const stepperValue = useMemo(() => ({ disabledStep }), [disabledStep]);
+    const stepperValue = useMemo(() => ({ disabledStep, stepRef }), [disabledStep]);
 
     return (
         <StepFormDispatch.Provider value={dispatchValue}>
