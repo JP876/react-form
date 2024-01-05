@@ -26,15 +26,16 @@ const CustomStepContainer = ({ input, currentStep, children }) => {
 
             if (rules?.hasOwnProperty('validate')) {
                 const validateRes = rules.validate(stepData);
-                setError(validateRes);
+                const res = typeof validateRes === 'boolean' ? !validateRes : validateRes;
+                setError(res);
 
-                if (!(typeof validateRes === 'boolean' && validateRes)) {
+                if (typeof validateRes !== 'boolean' && validateRes) {
                     setDisabledStep([step]);
                     return false;
                 }
 
                 setDisabledStep([]);
-                return validateRes;
+                return true;
             }
 
             return true;
