@@ -4,7 +4,7 @@ import { Paper, Stack } from '@mui/material';
 import { StepsForm } from '../../index';
 import { stepsRules } from './stepsRules';
 
-const stepOptions = { clickableStep: true };
+// const stepOptions = { clickableStep: true };
 
 const StepsFormExample = () => {
     const handleSubmit = (data) => {
@@ -17,7 +17,7 @@ const StepsFormExample = () => {
                 <StepsForm
                     inputs={stepsRules}
                     onSubmit={handleSubmit}
-                    stepOptions={stepOptions}
+                    // stepOptions={stepOptions}
                     // saveOnBackBtn
                     // mountOnlyActiveStep={false}
                     // btnMsgs={{ nextStep: 'Next', prevStep: 'Back', exit: 'Close' }}

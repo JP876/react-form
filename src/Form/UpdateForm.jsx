@@ -7,7 +7,7 @@ import DisableSubmitBtn from './Options/DisableSubmitBtn.jsx';
 import ClearErrMsgs from './Options/ClearErrMsgs.jsx';
 import ClearFieldsAfterSubmit from './Options/ClearFieldsAfterSubmit.jsx';
 import UpdateClickableStep from './Options/UpdateClickableStep.jsx';
-import { useStepFormDispatch } from './context/StepFormProvider.jsx';
+import { useStepFormDispatch, useStepFormState } from './context/StepFormProvider.jsx';
 
 const btnContainer = {
     display: 'flex',
@@ -32,7 +32,6 @@ const UpdateForm = (props) => {
         getFormMethods,
         formProps = {},
         // Steps form props
-        clickableStep = false,
         currentStep = false,
     } = props;
 
@@ -46,6 +45,8 @@ const UpdateForm = (props) => {
     const [disableBtn, setDisableBtn] = useState(false);
     const [isStepForm, setIsStepForm] = useState(false);
     const { errors } = formState;
+
+    const stepState = useStepFormState();
 
     const onSubmitFunc = (data, e) => {
         // if checkbox is not clicked once, set value to false instead of ''
@@ -66,7 +67,8 @@ const UpdateForm = (props) => {
     }, [defaultValues, reset, updateDefaultValues]);
 
     useEffect(() => {
-        setIsStepForm(!!document.getElementById('step-form-container'));
+        setIsStepForm(!!stepState?.values);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -80,7 +82,7 @@ const UpdateForm = (props) => {
             )}
             {removeErrMsgs && <ClearErrMsgs />}
             {clearFields && <ClearFieldsAfterSubmit />}
-            {isStepForm && clickableStep && <UpdateClickableStep currentStep={currentStep} />}
+            {isStepForm && <UpdateClickableStep currentStep={currentStep} />}
             {typeof getFormMethods === 'function' && getFormMethods(methods)}
 
             <form onSubmit={handleSubmit(onSubmitFunc)}>

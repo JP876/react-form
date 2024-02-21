@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import UpdateForm from '../UpdateForm.jsx';
 import { useStepsFormDispatch, useStepsFormState } from '../context/StepsFormProvider.jsx';
 
-const StepForm = ({ input, btnMsgs, exitBtnFunc, clickableStep, currentStep }) => {
+const StepForm = ({ input, btnMsgs, exitBtnFunc, currentStep }) => {
     const { handleNext, handlePrevStep } = useStepsFormDispatch();
     const { steps, activeStep } = useStepsFormState();
 
@@ -26,12 +26,7 @@ const StepForm = ({ input, btnMsgs, exitBtnFunc, clickableStep, currentStep }) =
     }, [btnMsgs, activeStep, steps]);
 
     return (
-        <UpdateForm
-            inputs={input}
-            onSubmit={handleNext}
-            clickableStep={clickableStep}
-            currentStep={currentStep}
-        >
+        <UpdateForm inputs={input} onSubmit={handleNext} currentStep={currentStep}>
             {typeof exitBtnFunc === 'function' ? (
                 <Button onClick={exitBtnFunc} color="error" variant="outlined">
                     {buttonMessages?.exit || 'Close'}

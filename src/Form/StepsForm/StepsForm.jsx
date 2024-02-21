@@ -93,7 +93,6 @@ const StepsFormContainer = ({
                                 input={input}
                                 btnMsgs={btnMsgs}
                                 exitBtnFunc={exitBtnFunc}
-                                clickableStep={stepOptions?.clickableStep}
                                 currentStep={currentStep}
                             />
                         )}
