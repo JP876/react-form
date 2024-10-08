@@ -103,6 +103,7 @@ const CustomStep = ({ input, currentStep }) => {
     return (
         <CustomStepContainer input={input} currentStep={currentStep}>
             <Comp
+                {...(input?.compProps || {})}
                 options={{
                     finalData,
                     handleSubmit,
